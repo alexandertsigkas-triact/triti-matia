@@ -1,0 +1,23 @@
+{
+  "name": "triti-matia-server",
+  "version": "0.1.0",
+  "description": "Subscription server for Τρίτη Ματιά: sign-in, plans, Claude analysis and Stripe payments",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.13.0",
+    "express": "^4.21.2",
+    "stripe": "^23.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  }
+}

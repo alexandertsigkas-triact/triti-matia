@@ -23,6 +23,10 @@ Before sending, the photo is scaled down to at most 1568 px on its longer side a
 
 Outside claude.ai there is no `sample` capability, so the page shows the built-in example and explains that analysis needs a Claude sign-in. To offer analysis without a Claude account, the page needs a small server that calls the Claude API with your own key; the prompt and the expected JSON shape are in the `prompt()` function of `index.html`.
 
+## Subscription version
+
+The `server/` folder holds a server that offers the app by subscription: email sign-in, monthly analysis limits per plan, card payments through Stripe and analysis through Triact's own Claude API key. It runs in a complete test mode without any keys. See [server/README.md](server/README.md).
+
 ## Published version
 
 https://claude.ai/artifact/2N65xoDK5yHVCnrrpkjKfN
