@@ -84,6 +84,20 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
   footer { font-size: 12px; color: var(--muted); }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table.vsm { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+  table.vsm th, table.vsm td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+  table.vsm th:first-child, table.vsm td:first-child { text-align: left; white-space: normal; min-width: 110px; }
+  table.vsm th { font-weight: 600; color: var(--muted); background: var(--paper); }
+  table.vsm input { width: 70px; font: inherit; text-align: right; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 3px 4px; }
+  table.vsm input:hover, table.vsm input:focus { border-color: var(--line); background: var(--paper); outline: none; }
+  table.vsm input.name { width: 100%; min-width: 100px; text-align: left; }
+  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+  .fig { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--paper); }
+  .fig b { display: block; font: 700 20px/1.2 var(--display); font-variant-numeric: tabular-nums; }
+  .fig span { font-size: 12px; color: var(--muted); }
+  .fig.alert { border-color: var(--signal); }
+  .fig.alert b { color: var(--signal); }
 </style>
 </head>
 <body>
@@ -142,7 +156,7 @@ const T = {
     placeholder: 'π.χ. Η είσοδος του σχολείου μας το πρωί· οι γονείς σταθμεύουν και τα παιδιά περνούν ανάμεσα.',
     analyse: 'Ανάλυση', working: 'Η φωτογραφία διαβάζεται… (περίπου 20–40 δευτερόλεπτα)', copy: 'Αντιγραφή κειμένου', copied: 'Αντιγράφηκε.',
     plain: 'Απλά λόγια', expert: 'Όροι P·L·T',
-    kinds: { auto: 'Αυτόματα', space: 'Κτίριο ή χώρος', work: 'Εργασία ή διαδικασία', art: 'Έργο τέχνης' },
+    kinds: { auto: 'Αυτόματα', space: 'Κτίριο ή χώρος', work: 'Εργασία ή διαδικασία', vsm: 'Χάρτης ροής αξίας (VSM)', art: 'Έργο τέχνης' },
     hLogics: 'Ποιες λογικές συναντιούνται', hThresholds: 'Πού συναντιούνται', hMoves: 'Τι θα τις έφερνε σε επαφή',
     hFalse: 'Η εύκολη λύση που κρύβει το πρόβλημα', hOpen: 'Τι μένει ανοιχτό', hLimits: 'Τι δεν φαίνεται από μία φωτογραφία',
     wants: 'Θέλει', seen: 'Φαίνεται από', between: 'ανάμεσα σε', test: 'Πώς θα φανεί ότι δουλεύει',
@@ -154,6 +168,11 @@ const T = {
     badPhoto: 'Η φωτογραφία δεν διαβάστηκε. Δοκιμάστε JPEG ή PNG.',
     footer: 'Η ανάλυση βασίζεται στη μέθοδο P·L·T του Αλέξανδρου Τσίγκα (Triact). Μια φωτογραφία δείχνει μια στιγμή· οι προτάσεις είναι αφετηρία για συζήτηση, όχι απόφαση.',
     codes: { logic: 'K', threshold: 'L', move: 'T', falseFix: 'ψευδο-τρίτο' },
+    vsm: { title: 'Ο χάρτης σε αριθμούς', note: 'Οι τιμές διαβάστηκαν από τη φωτογραφία. Ελέγξτε τις και διορθώστε όπου χρειάζεται· οι δείκτες ξαναϋπολογίζονται.',
+      process: 'Διεργασία', ct: 'C/T (s)', co: 'C/O (min)', up: 'Uptime (%)', ops: 'Χειριστές', invPcs: 'Απόθεμα πριν (τεμ.)', invDays: 'Απόθεμα πριν (ημ.)',
+      fg: 'Απόθεμα τελικού προϊόντος', demand: 'Ζήτηση (τεμ./ημέρα)', avail: 'Διαθέσιμος χρόνος (s/ημέρα)',
+      lead: 'Χρόνος διέλευσης', va: 'Χρόνος προστιθέμενης αξίας', ratio: 'Ποσοστό αξίας', takt: 'Takt time', bottleneck: 'Στενωπός',
+      days: 'ημέρες', s: 's', over: 'πάνω από το takt', unread: 'Δεν διαβάστηκαν καθαρά', basis: 'Το ποσοστό αξίας υπολογίζεται επί του διαθέσιμου χρόνου ανά ημέρα', assumed: '(υπόθεση: μία βάρδια 8 ωρών)' },
   },
   en: {
     tagline: 'See what meets in a photo, and what would bring it into contact.',
@@ -162,7 +181,7 @@ const T = {
     placeholder: 'e.g. Our school entrance in the morning; parents park and children pass between the cars.',
     analyse: 'Analyse', working: 'Reading the photo… (about 20–40 seconds)', copy: 'Copy text', copied: 'Copied.',
     plain: 'Plain words', expert: 'P·L·T terms',
-    kinds: { auto: 'Automatic', space: 'Building or space', work: 'Work or process', art: 'Artwork' },
+    kinds: { auto: 'Automatic', space: 'Building or space', work: 'Work or process', vsm: 'Value stream map (VSM)', art: 'Artwork' },
     hLogics: 'Which logics meet here', hThresholds: 'Where they meet', hMoves: 'What would bring them into contact',
     hFalse: 'The easy fix that hides the problem', hOpen: 'What stays open', hLimits: 'What one photo cannot show',
     wants: 'Wants', seen: 'Seen in', between: 'between', test: 'How you would know it works',
@@ -174,6 +193,11 @@ const T = {
     badPhoto: 'The photo could not be read. Try a JPEG or PNG.',
     footer: 'The analysis follows the P·L·T method by Alexander Tsigkas (Triact). A photo shows one moment; the suggestions are a starting point for discussion, not a decision.',
     codes: { logic: 'K', threshold: 'L', move: 'T', falseFix: 'false third' },
+    vsm: { title: 'The map in numbers', note: 'Values were read from the photo. Check them and correct where needed; the figures recalculate.',
+      process: 'Process', ct: 'C/T (s)', co: 'C/O (min)', up: 'Uptime (%)', ops: 'Operators', invPcs: 'Stock before (pcs)', invDays: 'Stock before (days)',
+      fg: 'Finished-goods stock', demand: 'Demand (pcs/day)', avail: 'Available time (s/day)',
+      lead: 'Production lead time', va: 'Value-added time', ratio: 'Value-added share', takt: 'Takt time', bottleneck: 'Bottleneck',
+      days: 'days', s: 's', over: 'above takt', unread: 'Not clearly readable', basis: 'The value-added share is taken over the available time per day', assumed: '(assumed: one 8-hour shift)' },
   },
 };
 
@@ -276,6 +300,7 @@ function render() {
     <h2>${esc(d.subject)}</h2>
     <div class="photo">${img}${pins}</div>
     <p>${esc(d.summary)}</p>
+    ${d.vsm ? vsmSection(d.vsm) : ''}
     <h3>${t('hLogics')}</h3>
     ${(d.logics || []).map((l, i) => `<div class="logic" style="--c0:${COLORS[i % 4]}">
         <div class="row"><strong>${esc(l.name)}</strong>${code(t('codes').logic, i)}</div>
@@ -297,6 +322,47 @@ function render() {
     ${d.limits ? `<p class="muted"><strong>${t('hLimits')}:</strong> ${esc(d.limits)}</p>` : ''}`;
 }
 
+const fmt = (n, dec = 0) => n == null ? '—' : Number(n).toLocaleString(lang === 'el' ? 'el-GR' : 'en-GB', { maximumFractionDigits: dec, minimumFractionDigits: 0 });
+
+function vsmSection(v) {
+  const V = t('vsm');
+  const cell = (i, f, val) => `<td><input inputmode="decimal" data-p="${i}" data-f="${f}" value="${val ?? ''}" aria-label="${f}"></td>`;
+  const top = (f, val) => `<input inputmode="decimal" data-top="${f}" value="${val ?? ''}" aria-label="${f}" style="width:90px">`;
+  return `<h3>${V.title}</h3><p class="muted">${V.note}</p>
+    <div class="tablewrap"><table class="vsm"><thead><tr><th>${V.process}</th><th>${V.invPcs}</th><th>${V.invDays}</th><th>${V.ct}</th><th>${V.co}</th><th>${V.up}</th><th>${V.ops}</th></tr></thead><tbody>
+    ${v.processes.map((p, i) => `<tr><td><input class="name" data-p="${i}" data-f="name" value="${esc(p.name)}" aria-label="${V.process}"></td>${cell(i, 'invPcs', p.invPcs)}${cell(i, 'invDays', p.invDays)}${cell(i, 'ct', p.ct)}${cell(i, 'co', p.co)}${cell(i, 'uptime', p.uptime)}${cell(i, 'operators', p.operators)}</tr>`).join('')}
+    </tbody></table></div>
+    <div class="row muted" style="gap:14px"><label>${V.fg} ${top('fgPcs', v.fgPcs)}</label><label>${V.demand} ${top('demand', v.demand)}</label><label>${V.avail} ${top('available', v.available)}</label></div>
+    <div id="vsmFigs">${vsmFigsHtml(v)}</div>
+    ${v.unreadable.length ? `<p class="muted"><strong>${V.unread}:</strong> ${v.unreadable.map(esc).join(' · ')}</p>` : ''}`;
+}
+
+function vsmFigsHtml(v) {
+  const V = t('vsm'), F = vsmFigures(v);
+  const neckOver = F.neck !== null && F.takt && v.processes[F.neck].ct > F.takt;
+  return `<div class="figs">
+    <div class="fig"><b>${fmt(F.lead, 1)}</b><span>${V.lead} (${V.days})</span></div>
+    <div class="fig"><b>${fmt(F.va)}</b><span>${V.va} (${V.s})</span></div>
+    <div class="fig"><b>${F.ratio == null ? '—' : fmt(F.ratio, F.ratio < 1 ? 2 : 1) + '%'}</b><span>${V.ratio}</span></div>
+    <div class="fig"><b>${fmt(F.takt)}</b><span>${V.takt} (${V.s})</span></div>
+    <div class="fig ${neckOver ? 'alert' : ''}"><b style="font-size:16px">${F.neck === null ? '—' : esc(v.processes[F.neck].name || '#' + (F.neck + 1))}</b><span>${V.bottleneck}${F.neck !== null ? ' · ' + fmt(v.processes[F.neck].ct) + ' s' : ''}${neckOver ? ' · ' + V.over : ''}</span></div>
+  </div><p class="muted" style="margin-top:6px">${V.basis}${F.assumed ? ' ' + V.assumed : ''}.</p>`;
+}
+
+document.addEventListener('input', (e) => {
+  const el = e.target;
+  const v = current.data && current.data.vsm; if (!v) return;
+  if (el.dataset.p !== undefined) {
+    const p = v.processes[+el.dataset.p]; if (!p) return;
+    if (el.dataset.f === 'name') p.name = el.value;
+    else { const n = parseFloat(el.value.replace(',', '.')); p[el.dataset.f] = Number.isFinite(n) ? n : null; }
+  } else if (el.dataset.top) {
+    const n = parseFloat(el.value.replace(',', '.')); v[el.dataset.top] = Number.isFinite(n) ? n : null;
+  } else return;
+  const box = $('#vsmFigs'); if (box) box.innerHTML = vsmFigsHtml(v);
+});
+document.addEventListener('change', (e) => { if (e.target.closest('table.vsm, [data-top]') && current.at) updateHistory(); });
+
 function shortName(name, i) {
   const s = String(name || '').replace(/^(Η λογική (του|της|των)\s+|The\s+|logic of\s+)/i, '').replace(/[’']s logic$/i, '').replace(/ logic$/i, '');
   return s.length > 28 ? s.slice(0, 26) + '…' : s || String.fromCharCode(65 + i);
@@ -305,7 +371,14 @@ function shortName(name, i) {
 function asText() {
   const d = current.data; if (!d || !d.logics) return '';
   const L = (i) => d.logics[i]?.name || '';
-  return [d.subject, '', d.summary, '', t('hLogics') + ':',
+  let vsmText = [];
+  if (d.vsm) {
+    const V = t('vsm'), F = vsmFigures(d.vsm);
+    vsmText = [V.title + ':', [V.process, V.invPcs, V.invDays, V.ct, V.co, V.up, V.ops].join(' | '),
+      ...d.vsm.processes.map((p) => [p.name, p.invPcs, p.invDays, p.ct, p.co, p.uptime, p.operators].map((x) => x ?? '—').join(' | ')),
+      `${V.lead}: ${fmt(F.lead, 1)} ${V.days} · ${V.va}: ${fmt(F.va)} s · ${V.ratio}: ${F.ratio == null ? '—' : fmt(F.ratio, 2) + '%'} · ${V.takt}: ${fmt(F.takt)} s`, ''];
+  }
+  return [d.subject, '', d.summary, '', ...vsmText, t('hLogics') + ':',
     ...d.logics.map((l, i) => `${expert ? 'K' + (i + 1) + ' ' : '- '}${l.name}: ${l.wants} (${l.evidence})`), '',
     t('hThresholds') + ':', ...d.thresholds.map((th, i) => `${i + 1}. ${th.title} [${th.between.map(L).join(' / ')}]: ${th.happens}`), '',
     t('hMoves') + ':', ...d.moves.map((m, i) => `${String.fromCharCode(65 + i)}. ${m.title}: ${m.how} ${t('test')}: ${m.test}`), '',
@@ -351,7 +424,15 @@ const KIND_HINT = {
   space: 'Read it as a building, street, square or interior: who uses it, what rules and forces shape it.',
   work: 'Read it as a workplace or process: flows of material, people, information, time, safety, quality.',
   art: 'Read it as an artwork or image: the orders, materials, gazes and meanings that meet in it.',
+  vsm: 'This is a photo of a VALUE STREAM MAP (lean VSM, hand-drawn or printed). Read it as a value stream: process boxes, data boxes, inventory triangles, push arrows, supermarkets, information flow from production control, customer and supplier, timeline. The logics are those of the actors and rules on the map (e.g. production control scheduling by forecast, the customer\'s demand, set-up economics, maintenance, quality, the supplier). Thresholds are hand-offs, inventory points and information links; place each at its position ON THE MAP. Moves may use lean means (supermarket pull, FIFO lane, pacemaker, levelling, set-up reduction) but must say which two logics they let act together. Lean terms are fine; P·L·T terms are not.',
 };
+
+const VSM_SHAPE = `Also read the numbers on the map into a field "vsm":
+{"processes": [{"name": string, "ct": seconds or null, "co": minutes or null, "uptime": percent or null, "operators": number or null, "invPcs": pieces waiting BEFORE this process or null, "invDays": days of stock before this process or null}] in flow order from supplier side to customer side,
+ "fgPcs": finished-goods pieces or null, "fgDays": finished-goods days or null, "demand": customer demand per day in pieces or null, "available": available working seconds per day or null,
+ "unreadable": [short strings naming values you could not read clearly]}
+Convert units: C/T to seconds, C/O to minutes. If demand is given per month, divide by working days written on the map, or by 20 if none. Use null for anything not on the map; never guess numbers.
+`;
 
 function prompt(note) {
   const language = lang === 'el' ? 'Greek (Modern Greek, plain everyday register)' : 'English (plain everyday register)';
@@ -364,12 +445,12 @@ Method, in short:
 ${KIND_HINT[kind]}
 ${note ? 'The person adds this context: """' + note.slice(0, 600) + '"""' : 'The person gave no extra context.'}
 Write every text field in ${language}. Use plain words for a member of the public: no method jargon (do not write "context", "contexture", "liminal", "transjunction", "P·L·T" in the fields). Be specific to what is visible. Short sentences.
-Return ONLY JSON with exactly this shape:
+${kind === 'vsm' ? VSM_SHAPE : ''}Return ONLY JSON with exactly this shape:
 {"subject": string (max 8 words), "summary": string (2-3 sentences),
  "logics": [{"name": string (e.g. "The driver's logic"), "wants": string, "evidence": string (what in the photo shows it)}],
  "thresholds": [{"title": string, "between": [logic index, logic index] (0-based), "happens": string, "x": number, "y": number}],
  "moves": [{"title": string, "how": string, "connects": [logic index, logic index], "threshold": number (1-based threshold number), "test": string}],
- "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)}`;
+ "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}}`;
 }
 
 function clean(d) {
@@ -382,7 +463,34 @@ function clean(d) {
     subject: String(d.subject || ''), summary: String(d.summary || ''), logics, thresholds,
     moves: arr(d.moves).slice(0, 4).map((m) => ({ title: String(m.title || ''), how: String(m.how || ''), connects: idx(m.connects), threshold: n(m.threshold, 1, thresholds.length), test: String(m.test || '') })),
     falseFix: String(d.falseFix || ''), open: arr(d.open).slice(0, 4).map(String), limits: String(d.limits || ''),
+    vsm: d.vsm && typeof d.vsm === 'object' ? cleanVsm(d.vsm) : null,
   };
+}
+
+function cleanVsm(v) {
+  const num = (x) => { const n = Number(x); return x === null || x === '' || !Number.isFinite(n) || n < 0 ? null : n; };
+  return {
+    processes: (Array.isArray(v.processes) ? v.processes : []).slice(0, 15).map((p) => ({
+      name: String(p.name || ''), ct: num(p.ct), co: num(p.co), uptime: num(p.uptime), operators: num(p.operators), invPcs: num(p.invPcs), invDays: num(p.invDays) })),
+    fgPcs: num(v.fgPcs), fgDays: num(v.fgDays), demand: num(v.demand), available: num(v.available),
+    unreadable: (Array.isArray(v.unreadable) ? v.unreadable : []).slice(0, 8).map(String),
+  };
+}
+
+/** Lead time, value-added time and takt, computed here from the table, not by the model. */
+function vsmFigures(v) {
+  const days = (pcs, d) => d ?? (pcs != null && v.demand ? pcs / v.demand : null);
+  const stock = [...v.processes.map((p) => days(p.invPcs, p.invDays)), days(v.fgPcs, v.fgDays)];
+  const known = stock.filter((x) => x != null);
+  const lead = known.length ? known.reduce((a, b) => a + b, 0) : null;
+  const va = v.processes.reduce((a, p) => a + (p.ct || 0), 0) || null;
+  const assumed = !v.available;
+  const avail = v.available || 28800;
+  const ratio = lead && va ? va / (lead * avail + va) * 100 : null;
+  const takt = v.demand ? avail / v.demand : null;
+  let neck = null;
+  v.processes.forEach((p, i) => { if (p.ct != null && (neck === null || p.ct > v.processes[neck].ct)) neck = i; });
+  return { lead, va, ratio, takt, neck, assumed, missing: stock.length - known.length };
 }
 
 let busy = false;
@@ -399,7 +507,7 @@ $('#analyse').addEventListener('click', async () => {
   $('#status').innerHTML = `<span class="spinner" aria-hidden="true"></span>${t('working')}`;
   try {
     const raw = await sample.json(prompt($('#context').value.trim()), { images: [photoBlob], modelTier: 'complex', cache: false });
-    current = { data: clean(raw), image: prepared.display, example: false };
+    current = { data: clean(raw), image: prepared.display, example: false, at: Date.now() };
     render();
     saveHistory();
     $('#result').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
@@ -413,7 +521,16 @@ $('#analyse').addEventListener('click', async () => {
 
 function loadHistory() { try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { return []; } }
 function saveHistory() {
-  const list = [{ at: Date.now(), thumb: prepared.thumb, image: prepared.display, data: current.data }, ...loadHistory()].slice(0, 6);
+  const list = [{ at: current.at, thumb: prepared.thumb, image: prepared.display, data: current.data }, ...loadHistory()].slice(0, 6);
+  writeHistory(list);
+}
+function updateHistory() {
+  const list = loadHistory();
+  const item = list.find((h) => h.at === current.at); if (!item) return;
+  item.data = current.data;
+  writeHistory(list);
+}
+function writeHistory(list) {
   for (let n = list.length; n > 0; n--) {
     try { localStorage.setItem(STORE, JSON.stringify(list.slice(0, n))); break; } catch { /* storage full: keep fewer */ }
   }
@@ -430,7 +547,7 @@ document.addEventListener('click', async (e) => {
   const k = e.target.closest('[data-kind]');
   if (k) { kind = k.dataset.kind; renderKinds(); return; }
   const h = e.target.closest('[data-h]');
-  if (h) { const item = loadHistory()[+h.dataset.h]; if (item) { current = { data: item.data, image: item.image, example: false }; render(); $('#result').scrollIntoView({ block: 'start' }); } return; }
+  if (h) { const item = loadHistory()[+h.dataset.h]; if (item) { current = { data: item.data, image: item.image, example: false, at: item.at }; render(); $('#result').scrollIntoView({ block: 'start' }); } return; }
 });
 $('#langEl').addEventListener('click', () => setLang('el'));
 $('#langEn').addEventListener('click', () => setLang('en'));

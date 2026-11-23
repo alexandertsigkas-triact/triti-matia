@@ -2,12 +2,14 @@
 
 A mobile web app that reads a photo with the P·L·T method (Polycontexturality · Liminality · Transjunction), created by Alexander Tsigkas (Triact, triact.gr).
 
-Take or choose a photo of a building or space, a workplace or process, an artwork, or anything else. The app returns, in plain words:
+Take or choose a photo of a building or space, a workplace or process, a value stream map, an artwork, or anything else. The app returns, in plain words:
 
 1. **Which logics meet** in the scene, what each one wants, and what in the photo shows it.
 2. **Where they meet**: the thresholds, marked as numbered points on the photo.
 3. **What would bring them into contact**: small, testable moves, each with a way to check that it works.
 4. **The easy fix that hides the problem**, the open questions, and what one photo cannot show.
+
+**Value stream maps (VSM):** in this mode the app also reads the map's data boxes and inventory triangles into an editable table (C/T, C/O, uptime, operators, stock) and calculates production lead time, value-added time and share, takt time and the bottleneck. The figures are computed by the page from the table, not by the model, and recalculate when you correct a value.
 
 A switch shows the P·L·T terms (K, L, T, false third) for readers who know the method. The interface is in Greek and English.
 
