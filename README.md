@@ -15,6 +15,12 @@ A switch shows the P·L·T terms (K, L, T, false third) for readers who know the
 
 The registry lives in `ccr/`: edit `build_registry.py`, run it, then `node ccr/embed.mjs` to update the page. Private entries go in `ccr/private.json`, which is never committed. The interface is in Greek and English.
 
+## Files instead of photos
+
+Besides photos, the app reads files: plain text (.txt, .md), Word (.docx), Excel (.xlsx), CSV and PDF. The file is opened on the device; only its text goes to Claude, never the file itself. Each meeting point in the reading then quotes the passage where it shows, instead of a point on a photo. Up to 60,000 characters, 40 PDF pages and 8 Excel sheets (400 rows each) are read; a note says when only the first part was used. A scanned PDF without a text layer is sent as images of its first three pages. Old .doc and .xls files must first be saved as .docx or .xlsx.
+
+The file readers are in `vendor/` and load only when a file is chosen: Mozilla's PDF.js 6.5 (legacy build, Apache 2.0) and fflate 0.8 (MIT) for Word and Excel. Their licences are in the same folder.
+
 ## How it works
 
 The whole app is one file, `index.html`. It runs as a Claude artifact and asks Claude to read the photo through the artifact's `sample` capability (with images enabled). The viewer must be signed in to Claude; the first analysis asks for their permission.

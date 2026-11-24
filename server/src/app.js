@@ -1,4 +1,5 @@
 import express from 'express';
+import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { z, ZodError } from 'zod';
@@ -76,7 +77,9 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
     return { received: true };
   }));
 
-  app.use(express.json({ limit: '8mb' }));
+  app.use(express.json({ limit: '13mb' }));
+  // The PDF reader and unzipper the page loads when someone chooses a file.
+  app.use('/vendor', express.static(join(dirname(config.appHtmlPath), 'vendor'), { maxAge: '7d' }));
 
   // ── the app page ──
   const page = () => {
@@ -129,12 +132,17 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
     requireJson(req);
     const user = requireUser(req);
     const body = z.object({
-      image: z.string().min(100).max(8_000_000),
+      image: z.string().min(100).max(8_000_000).optional(),
+      images: z.array(z.string().min(100).max(4_000_000)).min(1).max(3).optional(),
+      document: z.object({
+        name: z.string().max(200), format: z.enum(['txt', 'csv', 'docx', 'xlsx', 'pdf']),
+        text: z.string().min(1).max(60_000), truncated: z.boolean().default(false),
+      }).optional(),
       mediaType: z.enum(['image/jpeg', 'image/png', 'image/webp']).default('image/jpeg'),
       kind: z.enum(KINDS).default('auto'),
       lang: z.enum(['el', 'en', 'de']).default('el'),
       note: z.string().max(600).default(''),
-    }).parse(req.body);
+    }).refine((b) => [b.image, b.images, b.document].filter(Boolean).length === 1, 'Send one photo, scanned pages or one document.').parse(req.body);
 
     const month = monthKey(clock());
     const plan = planOf(user);
@@ -143,12 +151,14 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
     }
     let result;
     try {
-      result = await analyzer.analyse({ imageBase64: body.image, mediaType: body.mediaType, kind: body.kind, lang: body.lang, note: body.note });
+      const images = body.image ? [body.image] : body.images || [];
+      const source = body.document ? { type: 'doc', ...body.document } : body.images ? { type: 'pages', count: images.length } : { type: 'photo' };
+      result = await analyzer.analyse({ images, mediaType: body.mediaType, source, kind: body.kind, lang: body.lang, note: body.note });
     } catch (err) {
       console.error('Analysis failed:', err?.status ?? '', err?.message ?? err);
       throw new HttpError(502, 'analysis', 'The analysis did not finish. Please try again.');
     }
-    // Count only analyses that were delivered. The photo itself is not kept.
+    // Count only analyses that were delivered. Neither the photo nor the file is kept.
     db.addUsage(user.id, month);
     return { analysis: result.analysis, account: account(db.userById(user.id)) };
   }));

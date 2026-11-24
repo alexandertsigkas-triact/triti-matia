@@ -18,16 +18,16 @@ export class ClaudeAnalyzer {
     this.test = false;
   }
 
-  async analyse({ imageBase64, mediaType, kind, lang, note }) {
+  async analyse({ images = [], mediaType = 'image/jpeg', source = { type: 'photo' }, kind, lang, note }) {
     const res = await this.client.messages.create({
       model: this.model,
-      max_tokens: 3000,
+      max_tokens: source.type === 'photo' ? 3000 : 4000,
       messages: [
         {
           role: 'user',
           content: [
-            { type: 'image', source: { type: 'base64', media_type: mediaType, data: imageBase64 } },
-            { type: 'text', text: buildPrompt({ kind, lang, note }) },
+            ...images.map((data) => ({ type: 'image', source: { type: 'base64', media_type: mediaType, data } })),
+            { type: 'text', text: buildPrompt({ kind, lang, note, source }) },
           ],
         },
       ],
@@ -52,7 +52,7 @@ export class SampleAnalyzer {
     this.test = true;
   }
 
-  async analyse({ kind, lang }) {
+  async analyse({ kind, lang, source = { type: 'photo' } }) {
     const L = (el, en, de) => ({ el, en, de }[lang] ?? en);
     const sample = {
       subject: L('Δοκιμαστική ανάλυση (χωρίς Claude)', 'Test analysis (no Claude)', 'Testanalyse (ohne Claude)'),
@@ -79,6 +79,7 @@ export class SampleAnalyzer {
         fgPcs: 1200, fgDays: null, demand: 400, available: 27600, unreadable: [],
       };
     }
+    if (source.type !== 'photo') sample.thresholds[0].quote = source.type === 'doc' ? String(source.text).slice(0, 80) : L('Δείγμα παράθεσης.', 'Sample quote.', 'Beispielzitat.');
     return { analysis: cleanAnalysis(sample), tokens: { input: 0, output: 0 } };
   }
 

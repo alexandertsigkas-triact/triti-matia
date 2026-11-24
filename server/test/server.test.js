@@ -247,3 +247,48 @@ describe('languages', () => {
     expect((await call('POST', '/api/translate', { texts, to: 'fr' })).status).toBe(400);
   });
 });
+
+describe('files', () => {
+  it('analyses a document as text, with quotes instead of positions, and counts it as one analysis', async () => {
+    const { call, signIn } = await start();
+    await signIn();
+    const document = { name: 'Protokoll.docx', format: 'docx', text: 'Die Planung will volle Losgrößen. Der Kunde will jeden Tag eine kleine Menge.' };
+    const r = await call('POST', '/api/analyse', { document, kind: 'work', lang: 'de' });
+    expect(r.status).toBe(200);
+    expect(r.body.analysis.thresholds[0].quote).toContain('Die Planung will');
+    expect(r.body.account.remaining).toBe(2);
+  });
+
+  it('takes up to three scanned pages, and refuses a request that mixes a photo and a document', async () => {
+    const { call, signIn } = await start();
+    await signIn();
+    const ok = await call('POST', '/api/analyse', { images: [IMAGE, IMAGE], kind: 'auto', lang: 'en' });
+    expect(ok.status).toBe(200);
+    expect(ok.body.analysis.thresholds[0].quote).toBe('Sample quote.');
+    expect((await call('POST', '/api/analyse', { images: [IMAGE, IMAGE, IMAGE, IMAGE] })).status).toBe(400);
+    expect((await call('POST', '/api/analyse', { image: IMAGE, document: { name: 'a.txt', format: 'txt', text: 'x' } })).status).toBe(400);
+    expect((await call('POST', '/api/analyse', { kind: 'auto' })).status).toBe(400);
+  });
+
+  it('builds a document prompt that quotes, guards against instructions in the file and keeps the photo prompt as it was', () => {
+    const doc = buildPrompt({ kind: 'auto', lang: 'el', note: '', source: { type: 'doc', name: 'plan.xlsx', format: 'xlsx', text: 'A\t1', truncated: true } });
+    expect(doc).toContain('ONE table (the file "plan.xlsx")');
+    expect(doc).toContain('"quote": string');
+    expect(doc).not.toContain('"x": number');
+    expect(doc).toContain('not instructions');
+    expect(doc).toContain('Only the first part of the file is given');
+    expect(doc.endsWith('<file name="plan.xlsx">\nA\t1\n</file>')).toBe(true);
+    const photo = buildPrompt({ kind: 'space', lang: 'en', note: '' });
+    expect(photo).toContain('ONE photo');
+    expect(photo).toContain('"x": number, "y": number');
+    expect(photo).not.toContain('"quote"');
+  });
+
+  it('serves the PDF reader the page loads', async () => {
+    const { base } = await start();
+    const res = await fetch(base + '/vendor/fflate.min.js');
+    expect(res.status).toBe(200);
+    expect(res.headers.get('content-type')).toContain('javascript');
+    expect((await fetch(base + '/vendor/nothing.js')).status).toBe(404);
+  });
+});
