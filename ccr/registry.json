@@ -60,7 +60,10 @@
    "gate": null,
    "summary": "A rail edge in Athens where neighbourhood and infrastructure meet with no shared threshold.",
    "note": "Negative instance: a liminal trap.",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0002",
@@ -76,7 +79,10 @@
    "gate": null,
    "summary": "A rural veranda as a threshold between house, field and passers-by that works.",
    "note": "Positive instance: a threshold fulfilled.",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0003",
@@ -92,7 +98,10 @@
    "gate": null,
    "summary": "A field plate on two stones at Agia, Larisa, read as a threshold between owners, use and landscape.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0004",
@@ -108,7 +117,10 @@
    "gate": null,
    "summary": "A building envelope that carries no load: facade logic separated from structural logic.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0005",
@@ -124,7 +136,10 @@
    "gate": null,
    "summary": "A competition brief for pandemic architecture: shared light and separate air between residents and care.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0006",
@@ -149,7 +164,10 @@
    },
    "summary": "A 1930 rationalist house where technology and dwelling are shown together but not mediated.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0007",
@@ -167,7 +185,10 @@
    "gate": null,
    "summary": "Meta-analysis of existing works at Kavala port: city, port authority, university and waterfront users.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-URB-0009",
@@ -185,7 +206,10 @@
    "gate": null,
    "summary": "An Athens industrial district under regeneration where six logics meet at one threshold.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-MFG-0001",
@@ -201,7 +225,10 @@
    "gate": null,
    "summary": "A steel fabrication value stream: sales, scheduling, workshop and site erection meet at hand-offs and stock.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-MFG-0002",
@@ -217,7 +244,10 @@
    "gate": null,
    "summary": "Second reading of the steel fabrication value stream, after the first interventions.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-SEC-0001",
@@ -233,7 +263,10 @@
    "gate": null,
    "summary": "Data security as five incompatible contextures (legal, engineering, business, data subject, adversary); zero trust as permanent threshold; privacy-enhancing technologies as transjunction.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-CCU-0001",
@@ -249,7 +282,10 @@
    "gate": null,
    "summary": "A carbon-capture paper where chemistry, plant economics and climate accounting meet.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-SYS-0001",
@@ -265,7 +301,10 @@
    "gate": null,
    "summary": "Method note: a library of cases as a polycontextural gate above monocontextural language models.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-SYS-0002",
@@ -281,7 +320,10 @@
    "gate": null,
    "summary": "Prompt injection read as the collapse of instruction and data contextures into one channel.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-SYS-0003",
@@ -313,7 +355,10 @@
    },
    "summary": "An algorithmic risk score that closed families' cases before law, care and evidence could meet.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-NRG-0001",
@@ -341,9 +386,17 @@
      "Conditional"
     ]
    },
-   "summary": "A grid that replaces synchronous frequency balance with store-and-forward balancing.",
+   "summary": "SAFEr Grid (ERC Synergy, RWTH Aachen/Aalborg) replaces the synchronous 50 Hz balance of power with store-and-forward balancing of energy between decoupled subgrids. One carrier, grid frequency, is made to serve four contextures that do not share a logic; the project turns frequency from operator into operand. Certified third technically, uncertified institutionally.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ Synchronous-electromechanical",
+    "K₂ Inverter-based renewable",
+    "K₃ Informational (Internet, telecom)",
+    "K₄ Institutional (operators, markets, regulation)"
+   ],
+   "tool": null,
+   "source": "full entry"
   },
   {
    "id": "CCR-NRG-0002",
@@ -373,9 +426,18 @@
      "Conditional"
     ]
    },
-   "summary": "A data centre at a former lignite plant: grid, water, heat, jobs and land meet.",
+   "summary": "PPC data centre (300 MW, AWS lease) at the closed Agios Dimitrios lignite plant, Kozani. The right site (fit 12/15) with a configuration that returns too little (6/15, reciprocity 0.5), above all heat: 41 °C waste heat offered to greenhouses while the town lost its district heating. OD 4.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ Grid and energy",
+    "K₂ Digital",
+    "K₃ Thermal and water",
+    "K₄ Local community",
+    "K₅ Regulation"
+   ],
+   "tool": "CCR-NRG site-scoring sheet (fit, return, tension, OD, reciprocity, three refusals)",
+   "source": "full entry"
   },
   {
    "id": "CCR-NRG-0003",
@@ -405,9 +467,18 @@
      "Fail"
     ]
    },
-   "summary": "A data centre in a dense urban district: heat reuse fits, but land and grid do not.",
+   "summary": "Equinix campus at Amstel III, Amsterdam-Zuidoost: a weak site (fit 6/15) with a comparatively generous configuration (return 8/15, free residual heat). Grid congested until about 2036, scarce water, 5,500–8,000 homes planned on the same grid, a grandfathered permit despite the 2025 moratorium. Mirror image of Kozani. OD 5.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ Grid and energy",
+    "K₂ Digital",
+    "K₃ Thermal and water",
+    "K₄ Local community",
+    "K₅ Regulation"
+   ],
+   "tool": "CCR-NRG site-scoring sheet",
+   "source": "full entry"
   },
   {
    "id": "CCR-SYS-0004",
@@ -425,7 +496,10 @@
    "gate": null,
    "summary": "A vendor claim that fuses team, tool and prompt logics into one surface: conjunction sold as synthesis.",
    "note": "Renumbered 24 Nov 2026; issued as SYS-0002 in September.",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-SYS-0005",
@@ -447,7 +521,10 @@
    "gate": null,
    "summary": "A yes/no ballot that can register only political legitimacy while supply security, decarbonisation and capital stay blocked.",
    "note": "Renumbered 24 Nov 2026; issued as SYS-0003 in September.",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-DIP-0001",
@@ -463,7 +540,10 @@
    "gate": null,
    "summary": "A draft diplomatic instrument read as a liminal trap: pervasive deferral, status-quo freeze, reversibility asymmetry.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   },
   {
    "id": "CCR-DIP-0002",
@@ -479,7 +559,10 @@
    "gate": null,
    "summary": "The same instrument read as a seam: proportionality, an executive mechanism and UN Security Council reincorporation.",
    "note": "",
-   "numberToConfirm": false
+   "numberToConfirm": false,
+   "contextures": [],
+   "tool": null,
+   "source": "summary only"
   }
  ]
 }

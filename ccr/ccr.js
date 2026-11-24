@@ -22,7 +22,7 @@ const CCR = (() => {
   }
 
   function registryLines(registry) {
-    return arr(registry.entries).map((x) => [x.id, x.domain, x.title, x.signature?.en ? `signature "${x.signature.en}"` : '', x.verdict?.en ? `verdict: ${x.verdict.en}` : '', x.summary].filter(Boolean).join(' | ')).join('\n');
+    return arr(registry.entries).map((x) => [x.id, x.domain, x.title, x.signature?.en ? `signature "${x.signature.en}"` : '', x.verdict?.en ? `verdict: ${x.verdict.en}` : '', x.summary, arr(x.contextures).length ? `contextures: ${x.contextures.join('; ')}` : ''].filter(Boolean).join(' | ')).join('\n');
   }
 
   function matchPrompt(analysis, registry, lang) {
@@ -30,7 +30,7 @@ const CCR = (() => {
     return `You compare one new P·L·T analysis with a registry of earlier P·L·T cases (the CCR library of Alexander Tsigkas).
 A case is related when its STRUCTURE is similar, not just its topic: the same kind of contextures meeting, the same kind of threshold (trap or seam, hand-off, stock, boundary, channel collapse), or the same kind of transjunctive move or false third. A case from another domain can be the closest match.
 
-REGISTRY (one entry per line: id | domain | title | signature | verdict | summary):
+REGISTRY (one entry per line: id | domain | title | signature | verdict | summary | contextures):
 ${registryLines(registry)}
 
 NEW ANALYSIS (JSON):

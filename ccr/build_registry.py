@@ -7,9 +7,9 @@ Private entries go in private.json (not committed); with PRIVATE_OUT set, a full
 """
 import json, os
 E = []
-def e(id, domain, title, date, status, visibility, summary="", aliases=(), signature=None, verdict=None, gate=None, kind="Case", note="", confirm=False):
+def e(id, domain, title, date, status, visibility, summary="", aliases=(), signature=None, verdict=None, gate=None, kind="Case", note="", confirm=False, contextures=(), tool=None):
     E.append(dict(id=id, aliases=list(aliases), domain=domain, title=title, date=date, status=status, visibility=visibility,
-                  kind=kind, signature=signature, verdict=verdict, gate=gate, summary=summary, note=note, numberToConfirm=confirm))
+                  kind=kind, signature=signature, verdict=verdict, gate=gate, summary=summary, note=note, numberToConfirm=confirm, contextures=list(contextures), tool=tool, source="full entry" if contextures else "summary only"))
 U = lambda en, de=None, el=None: {"en": en, "de": de, "el": el}
 
 e("CCR-URB-0001","URB","Rail edge, Athens","2026-06","Final","public","A rail edge in Athens where neighbourhood and infrastructure meet with no shared threshold.",note="Negative instance: a liminal trap.")
@@ -30,13 +30,16 @@ e("CCR-SYS-0002","SYS","Prompt Injection as Contexture Collapse","2026-10-14","P
 e("CCR-SYS-0003","SYS","The Score That Closed Too Soon — Dutch childcare-benefits model","2026-11-09","Provisional","public","An algorithmic risk score that closed families' cases before law, care and evidence could meet.",
   signature=U("The score that closed too soon","Der Score, der zu früh schloss","Το σκορ που έκλεισε πρόωρα"),
   verdict={"class":"uncertified","en":"Uncertified on all three refusals"},gate={"od":5,"fit":8,"ret":2,"r":["Fail","Fail","Fail"]})
-e("CCR-NRG-0001","NRG","Synchrony Refused, Connection Kept — SAFEr Grid","2026-11-07","Provisional","public","A grid that replaces synchronous frequency balance with store-and-forward balancing.",
+e("CCR-NRG-0001","NRG","Synchrony Refused, Connection Kept — SAFEr Grid","2026-11-07","Provisional","public","SAFEr Grid (ERC Synergy, RWTH Aachen/Aalborg) replaces the synchronous 50 Hz balance of power with store-and-forward balancing of energy between decoupled subgrids. One carrier, grid frequency, is made to serve four contextures that do not share a logic; the project turns frequency from operator into operand. Certified third technically, uncertified institutionally.",
+  contextures=["K₁ Synchronous-electromechanical","K₂ Inverter-based renewable","K₃ Informational (Internet, telecom)","K₄ Institutional (operators, markets, regulation)"],
   signature=U("Synchrony refused, connection kept","Synchronie verweigert, Verbindung bewahrt","Συγχρονία αρνημένη, σύνδεση διατηρημένη"),
   verdict={"class":"conditional","en":"Certified (technical) · uncertified (institutional)"},gate={"od":"~4","r":["Pass","Pass","Conditional"]})
-e("CCR-NRG-0002","NRG","Where Compute Can Return — Kozani data centre","2026-11-08","Provisional","public","A data centre at a former lignite plant: grid, water, heat, jobs and land meet.",
+e("CCR-NRG-0002","NRG","Where Compute Can Return — Kozani data centre","2026-11-08","Provisional","public","PPC data centre (300 MW, AWS lease) at the closed Agios Dimitrios lignite plant, Kozani. The right site (fit 12/15) with a configuration that returns too little (6/15, reciprocity 0.5), above all heat: 41 °C waste heat offered to greenhouses while the town lost its district heating. OD 4.",
+  contextures=['K₁ Grid and energy', 'K₂ Digital', 'K₃ Thermal and water', 'K₄ Local community', 'K₅ Regulation'],tool="CCR-NRG site-scoring sheet (fit, return, tension, OD, reciprocity, three refusals)",
   signature=U("The right ground, the wrong temperature","Der richtige Ort, die falsche Temperatur","Ο σωστός τόπος, η λάθος θερμοκρασία"),
   verdict={"class":"uncertified","en":"Uncertified as announced; conditional if reconfigured"},gate={"od":4,"fit":12,"ret":6,"r":["Conditional","Fail","Conditional"]})
-e("CCR-NRG-0003","NRG","The Right Temperature, the Wrong Ground — Amsterdam-Zuidoost","2026-11-08","Provisional","public","A data centre in a dense urban district: heat reuse fits, but land and grid do not.",
+e("CCR-NRG-0003","NRG","The Right Temperature, the Wrong Ground — Amsterdam-Zuidoost","2026-11-08","Provisional","public","Equinix campus at Amstel III, Amsterdam-Zuidoost: a weak site (fit 6/15) with a comparatively generous configuration (return 8/15, free residual heat). Grid congested until about 2036, scarce water, 5,500–8,000 homes planned on the same grid, a grandfathered permit despite the 2025 moratorium. Mirror image of Kozani. OD 5.",
+  contextures=['K₁ Grid and energy', 'K₂ Digital', 'K₃ Thermal and water', 'K₄ Local community', 'K₅ Regulation'],tool="CCR-NRG site-scoring sheet",
   signature=U("The right temperature, the wrong ground","Die richtige Temperatur, der falsche Ort","Η σωστή θερμοκρασία, ο λάθος τόπος"),
   verdict={"class":"uncertified","en":"Uncertified"},gate={"od":5,"fit":6,"ret":8,"r":["Fail","Conditional","Fail"]})
 # Entries from earlier chats whose numbers clash or were never added to the master register.
