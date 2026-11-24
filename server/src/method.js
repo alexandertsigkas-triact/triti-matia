@@ -31,23 +31,24 @@ Method, in short:
 - The false third: one tempting fix that only hides or displaces the tension.
 ${KIND_HINT[kind]}
 ${note ? 'The person adds this context: """' + note.slice(0, 600) + '"""' : 'The person gave no extra context.'}
+Aim for wonder: the reading should make the person look again at something they thought they knew. Lead with what is easy to miss. Be specific to THIS photo; avoid stock phrases such as "two worlds meet" or "a space of tension". End with a real question that stays open.
 Write every text field in ${language}. Use plain words for a member of the public: no method jargon (do not write "context", "contexture", "liminal", "transjunction", "P·L·T" in the fields). Be specific to what is visible. Short sentences.
 ${kind === 'vsm' ? VSM_SHAPE : ''}${kind === 'auto' ? 'IF AND ONLY IF the photo shows a value stream map (lean VSM): ' + KIND_HINT.vsm + '\n' + VSM_SHAPE : ''}Return ONLY JSON with exactly this shape:
-{"subject": string (max 8 words), "summary": string (2-3 sentences),
- "logics": [{"name": string (e.g. "The driver's logic"), "wants": string, "evidence": string (what in the photo shows it)}],
- "thresholds": [{"title": string, "between": [logic index, logic index] (0-based), "happens": string, "x": number, "y": number}],
+{"subject": string (max 8 words), "surprise": string (1-2 sentences: the thing in this photo most people would not notice, said plainly), "summary": string (2-3 sentences),
+ "logics": [{"name": string (e.g. "The driver's logic"), "wants": string, "evidence": string (what in the photo shows it), "voice": string (1-2 sentences in the first person: how this place looks from this logic)}],
+ "thresholds": [{"title": string, "between": [logic index, logic index] (0-based), "happens": string, "deeper": string (2-3 sentences: why exactly here, and what changes if you stand on the other side), "x": number, "y": number}],
  "moves": [{"title": string, "how": string, "connects": [logic index, logic index], "threshold": number (1-based threshold number), "test": string}],
- "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}${kind === 'auto' ? ', "detected": "space" | "work" | "vsm" | "art" | "other", "vsm": object as described above, only when detected is "vsm"' : ''}}`;
+ "falseFix": string, "question": string (one open question addressed to the viewer, to take away), "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}${kind === 'auto' ? ', "detected": "space" | "work" | "vsm" | "art" | "other", "vsm": object as described above, only when detected is "vsm"' : ''}}`;
 }
 
 export function cleanAnalysis(d) {
   const arr = (v) => Array.isArray(v) ? v : [];
   const n = (v, lo, hi) => { const x = Number(v); return Number.isFinite(x) ? Math.min(hi, Math.max(lo, x)) : null; };
-  const logics = arr(d.logics).slice(0, 4).map((l) => ({ name: String(l.name || ''), wants: String(l.wants || ''), evidence: String(l.evidence || '') }));
+  const logics = arr(d.logics).slice(0, 4).map((l) => ({ name: String(l.name || ''), wants: String(l.wants || ''), evidence: String(l.evidence || ''), voice: String(l.voice || '') }));
   const idx = (v) => arr(v).map(Number).filter((j) => Number.isInteger(j) && j >= 0 && j < logics.length);
-  const thresholds = arr(d.thresholds).slice(0, 4).map((th) => ({ title: String(th.title || ''), between: idx(th.between), happens: String(th.happens || ''), x: n(th.x, 0, 100) ?? 50, y: n(th.y, 0, 100) ?? 50 }));
+  const thresholds = arr(d.thresholds).slice(0, 4).map((th) => ({ title: String(th.title || ''), between: idx(th.between), happens: String(th.happens || ''), deeper: String(th.deeper || ''), x: n(th.x, 0, 100) ?? 50, y: n(th.y, 0, 100) ?? 50 }));
   return {
-    subject: String(d.subject || ''), summary: String(d.summary || ''), logics, thresholds,
+    subject: String(d.subject || ''), surprise: String(d.surprise || ''), question: String(d.question || ''), summary: String(d.summary || ''), logics, thresholds,
     moves: arr(d.moves).slice(0, 4).map((m) => ({ title: String(m.title || ''), how: String(m.how || ''), connects: idx(m.connects), threshold: n(m.threshold, 1, thresholds.length), test: String(m.test || '') })),
     falseFix: String(d.falseFix || ''), open: arr(d.open).slice(0, 4).map(String), limits: String(d.limits || ''),
     vsm: d.vsm && typeof d.vsm === 'object' ? cleanVsm(d.vsm) : null,
