@@ -124,7 +124,7 @@
     <h1 id="appName">Τρίτη Ματιά<small id="tagline">Δείτε τι συναντιέται σε μια φωτογραφία, και τι θα το έφερνε σε επαφή.</small></h1>
     <div class="row">
       <div class="seg" role="group" aria-label="Γλώσσα">
-        <button id="langEl" aria-pressed="true">ΕΛ</button><button id="langEn" aria-pressed="false">EN</button>
+        <button id="langEl" aria-pressed="true">ΕΛ</button><button id="langEn" aria-pressed="false">EN</button><button id="langDe" aria-pressed="false">DE</button>
       </div>
     </div>
   </header>
@@ -193,7 +193,7 @@ const CCR = (() => {
   }
 
   function matchPrompt(analysis, registry, lang) {
-    const language = lang === 'en' ? 'English' : 'Modern Greek';
+    const language = { en: 'English', de: 'German' }[lang] || 'Modern Greek';
     return `You compare one new P·L·T analysis with a registry of earlier P·L·T cases (the CCR library of Alexander Tsigkas).
 A case is related when its STRUCTURE is similar, not just its topic: the same kind of contextures meeting, the same kind of threshold (trap or seam, hand-off, stock, boundary, channel collapse), or the same kind of transjunctive move or false third. A case from another domain can be the closest match.
 
@@ -385,6 +385,43 @@ const T = {
       lead: 'Production lead time', va: 'Value-added time', ratio: 'Value-added share', takt: 'Takt time', bottleneck: 'Bottleneck',
       days: 'days', s: 's', over: 'above takt', unread: 'Not clearly readable', basis: 'The value-added share is taken over the available time per day', assumed: '(assumed: one 8-hour shift)' },
   },
+  de: {
+    tagline: 'Sehen, was sich auf einem Foto begegnet – und was es in Kontakt bringen würde.',
+    step1: '1. Foto', take: 'Foto aufnehmen oder auswählen', retake: 'Anderes Foto',
+    context: 'Was ist es, und was beschäftigt Sie? (optional)',
+    placeholder: 'z. B. Unser Schuleingang am Morgen; Eltern halten an, Kinder laufen zwischen den Autos.',
+    analyse: 'Analysieren', working: 'Das Foto wird gelesen … (etwa 20–40 Sekunden)', copy: 'Text kopieren', copied: 'Kopiert.',
+    plain: 'Einfache Worte', expert: 'P·L·T-Begriffe',
+    kinds: { auto: 'Automatisch', space: 'Gebäude oder Raum', work: 'Arbeit oder Prozess', vsm: 'Wertstromkarte (VSM)', art: 'Kunstwerk' },
+    hLogics: 'Welche Logiken sich hier begegnen', hThresholds: 'Wo sie sich begegnen', hMoves: 'Was sie in Kontakt bringen würde',
+    hFalse: 'Die bequeme Lösung, die das Problem verdeckt', hOpen: 'Was offen bleibt', hLimits: 'Was ein Foto nicht zeigen kann',
+    wants: 'Will', seen: 'Sichtbar an', between: 'zwischen', test: 'Woran man erkennt, dass es wirkt',
+    example: 'Beispiel', exampleNote: 'So sieht eine Analyse aus. Nehmen Sie Ihr eigenes Foto auf, um zu beginnen.',
+    noClaude: 'Für die Analyse ist eine Anmeldung bei Claude nötig. Öffnen Sie diese Seite angemeldet auf claude.ai, um eigene Fotos zu analysieren.',
+    noImages: 'In dieser Ansicht dürfen keine Bilder an Claude gesendet werden.',
+    failed: 'Die Analyse wurde nicht abgeschlossen. Bitte versuchen Sie es gleich noch einmal.', busy: 'Zu viele Analysen gleichzeitig. Warten Sie eine Minute und versuchen Sie es erneut.',
+    denied: 'Die Erlaubnis für Claude wurde nicht erteilt. Drücken Sie erneut „Analysieren“ und erlauben Sie sie.',
+    badPhoto: 'Das Foto konnte nicht gelesen werden. Versuchen Sie JPEG oder PNG.',
+    footer: 'Die Analyse folgt der P·L·T-Methode von Alexander Tsigkas (Triact). Ein Foto zeigt einen Moment; die Vorschläge sind ein Ausgangspunkt für das Gespräch, keine Entscheidung.',
+    codes: { logic: 'K', threshold: 'L', move: 'T', falseFix: 'falsches Drittes' },
+    ccr: { title: 'CCR-Bibliothek', intro: 'Vergleichen Sie diese Analyse mit den CCR-Akten oder entwerfen Sie eine neue Akte. Die Nummer wird erst nach Prüfung vergeben.',
+      find: 'Verwandte CCR-Akten', draft: 'CCR-Akte entwerfen', finding: 'Bibliothek wird durchsucht …', drafting: 'Akte wird entworfen … (etwa 30 Sekunden)',
+      none: 'Keine Akte ist strukturell nah. Vielleicht ein neuer Falltyp.', shares: 'Gemeinsam', differs: 'Anders',
+      copy: 'Akte kopieren (Markdown)', copied: 'Akte kopiert.', failed: 'Nicht abgeschlossen. Bitte erneut versuchen.', entries: (n) => `${n} Akten in der Bibliothek` },
+    acct: { signinTitle: 'Anmelden', signinText: 'Geben Sie Ihre E-Mail-Adresse ein. Wir senden Ihnen einen Anmeldelink, ohne Passwort.', email: 'Ihre E-Mail', send: 'Link senden',
+      sent: 'Wir haben Ihnen einen Link gesendet. Öffnen Sie ihn innerhalb von 15 Minuten.', testLink: 'Testmodus: Es wird keine E-Mail gesendet. Öffnen Sie den Link hier:', openLink: 'Link öffnen',
+      signedAs: 'Angemeldet als', logout: 'Abmelden', plan: 'Abo', left: (r, l) => `Noch ${r} von ${l} Analysen in diesem Monat`,
+      perMonth: '/ Monat', analyses: (n) => `${n} Analysen im Monat`, choose: 'Wählen', current: 'Ihr Abo', manage: 'Abo verwalten',
+      testPay: 'Testzahlungen: Es wird nichts wirklich berechnet.', testAi: 'Testanalyse: Es wird ein Beispiel gezeigt, keine echte Lesart.',
+      needSignin: 'Melden Sie sich an, um eigene Fotos zu analysieren.', limit: 'Sie haben alle Analysen dieses Monats genutzt. Wählen Sie ein größeres Abo oder warten Sie auf den nächsten Monat.',
+      welcome: 'Sie sind angemeldet.', expired: 'Der Link ist abgelaufen oder wurde schon benutzt. Fordern Sie einen neuen an.', paid: 'Ihr Abo ist aktiv. Vielen Dank!', unpaid: 'Zahlung abgebrochen; es wurde nichts berechnet.',
+      privacy: 'Das Foto wird nur für die Analyse gesendet und nicht gespeichert. Das Ergebnis bleibt auf diesem Gerät.' },
+    vsm: { title: 'Die Karte in Zahlen', note: 'Die Werte wurden vom Foto gelesen. Prüfen und korrigieren Sie sie bei Bedarf; die Kennzahlen rechnen neu.',
+      process: 'Prozess', ct: 'ZZ (s)', co: 'Rüstzeit (min)', up: 'Verfügbarkeit (%)', ops: 'Werker', invPcs: 'Bestand davor (Stk.)', invDays: 'Bestand davor (Tage)',
+      fg: 'Fertigwarenbestand', demand: 'Bedarf (Stk./Tag)', avail: 'Verfügbare Zeit (s/Tag)',
+      lead: 'Durchlaufzeit', va: 'Wertschöpfungszeit', ratio: 'Wertschöpfungsanteil', takt: 'Taktzeit', bottleneck: 'Engpass',
+      days: 'Tage', s: 's', over: 'über Takt', unread: 'Nicht klar lesbar', basis: 'Der Wertschöpfungsanteil bezieht sich auf die verfügbare Zeit pro Tag', assumed: '(angenommen: eine 8-Stunden-Schicht)' },
+  },
 };
 
 const EXAMPLE = {
@@ -428,6 +465,26 @@ const EXAMPLE = {
     open: ['Who walks the children from the drop-off point?', 'Will the corner shopkeepers accept the zone for half an hour?'],
     limits: 'The picture does not show traffic at other hours or what parents think.',
   },
+  de: {
+    subject: 'Ein Schuleingang um 8 Uhr morgens',
+    summary: 'Die Autos der Eltern, die Kinder auf dem Weg in die Schule und die Nachbarn treffen sich auf demselben Gehweg. Jede Gruppe folgt ihrer eigenen Logik, und niemand „besitzt“ die Stelle, an der sie sich kreuzen.',
+    logics: [
+      { name: 'Die Logik der Eltern im Auto', wants: 'Das Kind so nah wie möglich absetzen, in wenigen Sekunden.', evidence: 'Autos in zweiter Reihe vor dem Tor.' },
+      { name: 'Die Logik des Kindes', wants: 'Mit den Freunden auf den Hof, ohne zu warten.', evidence: 'Kinder, die zwischen den Autos laufen.' },
+      { name: 'Die Logik der Nachbarschaft', wants: 'Vorbeikommen, ausparken, den Laden öffnen.', evidence: 'Die Fußgängerin mit Kinderwagen, die auf die Straße ausweicht.' },
+    ],
+    thresholds: [
+      { title: 'Die Autotür mitten auf der Straße', between: [0, 1], happens: 'Das Kind steigt zur Fahrbahn hin aus; hier wird die Eile der Eltern zum Risiko des Kindes.', x: 34, y: 62 },
+      { title: 'Der schmale Gehweg am Tor', between: [1, 2], happens: 'Wartende Kinder und Passanten drängen sich auf demselben Meter.', x: 70, y: 70 },
+    ],
+    moves: [
+      { title: 'Eine Haltezone 50 Meter weiter', how: 'Eine markierte Haltezone an der Ecke von 7:45 bis 8:15, mit einem Elternteil, das die Kinder zum Tor begleitet.', connects: [0, 1], threshold: 1, test: 'Zwei Wochen lang kein Auto in zweiter Reihe vor dem Tor.' },
+      { title: 'Das Tor öffnet früher', how: 'Der Hof öffnet um 7:40, damit sich die Kinder nicht auf dem Gehweg drängen.', connects: [1, 2], threshold: 2, test: 'Um 8:00 kommt ein Kinderwagen durch.' },
+    ],
+    falseFix: 'Ein Geländer entlang des Gehwegs. Es trennt die Kinder von der Straße, verschiebt aber denselben Konflikt an den ersten Übergang.',
+    open: ['Wer begleitet die Kinder von der Haltezone?', 'Akzeptieren die Ladenbesitzer an der Ecke die Zone für eine halbe Stunde?'],
+    limits: 'Das Bild zeigt weder den Verkehr zu anderen Zeiten noch, was die Eltern denken.',
+  },
 };
 
 const SKETCH = `<svg class="sketch" viewBox="0 0 400 260" role="img" aria-label="Σκίτσο εισόδου σχολείου">
@@ -451,7 +508,8 @@ function setLang(l) {
   document.documentElement.lang = l;
   $('#langEl').setAttribute('aria-pressed', String(l === 'el'));
   $('#langEn').setAttribute('aria-pressed', String(l === 'en'));
-  $('#appName').firstChild.textContent = l === 'el' ? 'Τρίτη Ματιά' : 'Third Look';
+  $('#langDe').setAttribute('aria-pressed', String(l === 'de'));
+  $('#appName').firstChild.textContent = { el: 'Τρίτη Ματιά', en: 'Third Look', de: 'Dritter Blick' }[l];
   $('#tagline').textContent = t('tagline');
   $('#tStep1').textContent = t('step1');
   $('#tTake').textContent = photoBlob ? t('retake') : t('take');
@@ -510,7 +568,7 @@ function render() {
   renderCcr();
 }
 
-const fmt = (n, dec = 0) => n == null ? '—' : Number(n).toLocaleString(lang === 'el' ? 'el-GR' : 'en-GB', { maximumFractionDigits: dec, minimumFractionDigits: 0 });
+const fmt = (n, dec = 0) => n == null ? '—' : Number(n).toLocaleString({ el: 'el-GR', en: 'en-GB', de: 'de-DE' }[lang], { maximumFractionDigits: dec, minimumFractionDigits: 0 });
 
 function vsmSection(v) {
   const V = t('vsm');
@@ -623,7 +681,7 @@ Convert units: C/T to seconds, C/O to minutes. If demand is given per month, div
 `;
 
 function prompt(note) {
-  const language = lang === 'el' ? 'Greek (Modern Greek, plain everyday register)' : 'English (plain everyday register)';
+  const language = { el: 'Greek (Modern Greek, plain everyday register)', en: 'English (plain everyday register)', de: 'German (plain everyday register, standard German)' }[lang];
   return `You are analysing ONE photo with the P·L·T method (Polycontexturality · Liminality · Transjunction, by Alexander Tsigkas).
 Method, in short:
 - Polycontexturality: a situation holds several logics (contexts) at once, each valid on its own terms, with its own rules and values. Name 2 to 4 that are really visible or strongly implied in the photo. Do not invent people or facts that cannot be seen.
@@ -728,7 +786,7 @@ function renderAccount() {
 
 function plansHtml(account) {
   const A = t('acct');
-  const price = (p) => `${p.priceEur.toFixed(2).replace('.', lang === 'el' ? ',' : '.')} € ${A.perMonth}`;
+  const price = (p) => `${p.priceEur.toFixed(2).replace('.', lang === 'en' ? '.' : ',')} € ${A.perMonth}`;
   return `<div class="plans">${SERVER.plans.map((p) => {
     const cur = account && account.plan === p.id;
     const action = !account || cur || p.id === 'free' ? '' : `<button class="btn" data-plan="${p.id}">${A.choose}</button>`;
@@ -792,7 +850,7 @@ function renderCcr() {
   $('#ccrDraft').addEventListener('click', () => runCcr('draft'));
   const cp = $('#ccrCopy');
   if (cp) cp.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(CCR.draftMarkdown(x.draft)); $('#status').textContent = C.copied; } catch { showError(lang === 'el' ? 'Η αντιγραφή δεν επιτράπηκε σε αυτή την προβολή.' : 'Copying is not allowed in this view.'); }
+    try { await navigator.clipboard.writeText(CCR.draftMarkdown(x.draft)); $('#status').textContent = C.copied; } catch { showError({ el: 'Η αντιγραφή δεν επιτράπηκε σε αυτή την προβολή.', en: 'Copying is not allowed in this view.', de: 'Kopieren ist in dieser Ansicht nicht erlaubt.' }[lang]); }
   });
 }
 
@@ -911,11 +969,12 @@ document.addEventListener('click', async (e) => {
 });
 $('#langEl').addEventListener('click', () => setLang('el'));
 $('#langEn').addEventListener('click', () => setLang('en'));
+$('#langDe').addEventListener('click', () => setLang('de'));
 $('#plain').addEventListener('click', () => { expert = false; $('#plain').setAttribute('aria-pressed', 'true'); $('#expert').setAttribute('aria-pressed', 'false'); render(); });
 $('#expert').addEventListener('click', () => { expert = true; $('#plain').setAttribute('aria-pressed', 'false'); $('#expert').setAttribute('aria-pressed', 'true'); render(); });
 $('#copy').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(asText()); $('#status').textContent = t('copied'); setTimeout(() => { if (!busy) $('#status').textContent = ''; }, 2500); }
-  catch { showError(lang === 'el' ? 'Η αντιγραφή δεν επιτράπηκε σε αυτή την προβολή.' : 'Copying is not allowed in this view.'); }
+  catch { showError({ el: 'Η αντιγραφή δεν επιτράπηκε σε αυτή την προβολή.', en: 'Copying is not allowed in this view.', de: 'Kopieren ist in dieser Ansicht nicht erlaubt.' }[lang]); }
 });
 
 current = { data: EXAMPLE.el, image: null, example: true };

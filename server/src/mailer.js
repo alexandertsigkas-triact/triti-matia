@@ -16,6 +16,7 @@ export class ConsoleMailer {
 }
 
 export function loginEmail(lang, link) {
+  if (lang === 'de') return { subject: 'Ihr Anmeldelink für Dritter Blick', text: `Öffnen Sie diesen Link, um sich anzumelden. Er gilt einmal, 15 Minuten lang:\n\n${link}\n\nFalls Sie ihn nicht angefordert haben, ignorieren Sie diese E-Mail.` };
   return lang === 'en'
     ? { subject: 'Your sign-in link for Third Look', text: `Open this link to sign in. It works once, within 15 minutes:\n\n${link}\n\nIf you did not ask for it, ignore this email.` }
     : { subject: 'Ο σύνδεσμος σύνδεσης για την Τρίτη Ματιά', text: `Ανοίξτε αυτόν τον σύνδεσμο για να συνδεθείτε. Ισχύει μία φορά, για 15 λεπτά:\n\n${link}\n\nΑν δεν τον ζητήσατε, αγνοήστε αυτό το μήνυμα.` };

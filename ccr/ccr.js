@@ -26,7 +26,7 @@ const CCR = (() => {
   }
 
   function matchPrompt(analysis, registry, lang) {
-    const language = lang === 'en' ? 'English' : 'Modern Greek';
+    const language = { en: 'English', de: 'German' }[lang] || 'Modern Greek';
     return `You compare one new P·L·T analysis with a registry of earlier P·L·T cases (the CCR library of Alexander Tsigkas).
 A case is related when its STRUCTURE is similar, not just its topic: the same kind of contextures meeting, the same kind of threshold (trap or seam, hand-off, stock, boundary, channel collapse), or the same kind of transjunctive move or false third. A case from another domain can be the closest match.
 

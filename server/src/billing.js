@@ -62,7 +62,7 @@ export class StripeBilling {
       ...(user.stripe_customer ? { customer: user.stripe_customer } : { customer_email: user.email }),
       metadata: { plan },
       subscription_data: { metadata: { plan, user_id: String(user.id) } },
-      locale: lang === 'en' ? 'en' : 'el',
+      locale: lang === 'el' ? 'el' : lang === 'de' ? 'de' : 'en',
       automatic_tax: { enabled: process.env.STRIPE_AUTOMATIC_TAX === '1' },
       success_url: `${this.baseUrl}/?paid=1`,
       cancel_url: `${this.baseUrl}/?paid=0`,

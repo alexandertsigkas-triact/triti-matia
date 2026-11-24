@@ -22,7 +22,7 @@ Convert units: C/T to seconds, C/O to minutes. If demand is given per month, div
 `;
 
 export function buildPrompt({ kind, lang, note }) {
-  const language = lang === 'el' ? 'Greek (Modern Greek, plain everyday register)' : 'English (plain everyday register)';
+  const language = { el: 'Greek (Modern Greek, plain everyday register)', en: 'English (plain everyday register)', de: 'German (plain everyday register, standard German)' }[lang] || 'English (plain everyday register)';
   return `You are analysing ONE photo with the P·L·T method (Polycontexturality · Liminality · Transjunction, by Alexander Tsigkas).
 Method, in short:
 - Polycontexturality: a situation holds several logics (contexts) at once, each valid on its own terms, with its own rules and values. Name 2 to 4 that are really visible or strongly implied in the photo. Do not invent people or facts that cannot be seen.

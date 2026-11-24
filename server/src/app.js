@@ -94,7 +94,7 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
   // ── sign-in by email link ──
   app.post('/api/auth/request', wrap(async (req) => {
     requireJson(req);
-    const body = z.object({ email: z.string(), lang: z.enum(['el', 'en']).default('el') }).parse(req.body);
+    const body = z.object({ email: z.string(), lang: z.enum(['el', 'en', 'de']).default('el') }).parse(req.body);
     const email = normaliseEmail(body.email);
     if (!email) throw new HttpError(400, 'email', 'That does not look like an email address.');
     const last = lastLoginRequest.get(email) ?? 0;
@@ -132,7 +132,7 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
       image: z.string().min(100).max(8_000_000),
       mediaType: z.enum(['image/jpeg', 'image/png', 'image/webp']).default('image/jpeg'),
       kind: z.enum(KINDS).default('auto'),
-      lang: z.enum(['el', 'en']).default('el'),
+      lang: z.enum(['el', 'en', 'de']).default('el'),
       note: z.string().max(600).default(''),
     }).parse(req.body);
 
@@ -157,7 +157,7 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
   const ccrBody = z.object({
     analysis: z.object({ subject: z.string().max(300), summary: z.string().max(2000).optional(), kind: z.string().max(10).optional(),
       logics: z.array(z.any()).max(6), thresholds: z.array(z.any()).max(6), moves: z.array(z.any()).max(6), falseFix: z.string().max(1000).optional() }).passthrough(),
-    lang: z.enum(['el', 'en']).default('el'),
+    lang: z.enum(['el', 'en', 'de']).default('el'),
     matches: z.array(z.object({ id: z.string() }).passthrough()).max(3).default([]),
   });
 
@@ -196,7 +196,7 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
   app.post('/api/billing/checkout', wrap(async (req) => {
     requireJson(req);
     const user = requireUser(req);
-    const { plan, lang } = z.object({ plan: z.enum(PAID), lang: z.enum(['el', 'en']).default('el') }).parse(req.body);
+    const { plan, lang } = z.object({ plan: z.enum(PAID), lang: z.enum(['el', 'en', 'de']).default('el') }).parse(req.body);
     if (!billing.validPlan(plan)) throw new HttpError(400, 'plan', 'This plan is not on sale yet.');
     if (user.plan === plan) throw new HttpError(409, 'same', 'You already have this plan.');
     if (user.stripe_subscription) return { url: await billing.portalUrl(user) };
