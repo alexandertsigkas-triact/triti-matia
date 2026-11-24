@@ -11,7 +11,9 @@ Take or choose a photo of a building or space, a workplace or process, a value s
 
 **Value stream maps (VSM):** in this mode the app also reads the map's data boxes and inventory triangles into an editable table (C/T, C/O, uptime, operators, stock) and calculates production lead time, value-added time and share, takt time and the bottleneck. The figures are computed by the page from the table, not by the model, and recalculate when you correct a value.
 
-A switch shows the P·L·T terms (K, L, T, false third) for readers who know the method. The interface is in Greek and English.
+A switch shows the P·L·T terms (K, L, T, false third) for readers who know the method. In that view the app also connects the analysis to the **CCR library**: it finds up to three structurally related records, and drafts a new CCR record (Phase P0, K/L/T tables, false third, OD, the three refusals, verdict, remainder, trilingual signature) without a number, for review before registration.
+
+The registry lives in `ccr/`: edit `build_registry.py`, run it, then `node ccr/embed.mjs` to update the page. Private entries go in `ccr/private.json`, which is never committed. The interface is in Greek and English.
 
 ## How it works
 

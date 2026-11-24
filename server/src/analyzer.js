@@ -38,6 +38,12 @@ export class ClaudeAnalyzer {
       tokens: { input: res.usage?.input_tokens ?? null, output: res.usage?.output_tokens ?? null },
     };
   }
+
+  /** A text-only request that must answer with JSON (used for the CCR functions). */
+  async completeJson(prompt) {
+    const res = await this.client.messages.create({ model: this.model, max_tokens: 4000, messages: [{ role: 'user', content: prompt }] });
+    return extractJson(res.content.filter((c) => c.type === 'text').map((c) => c.text).join(''));
+  }
 }
 
 /** Test mode without an API key: returns a fixed sample so the whole flow can be tried. */
@@ -74,5 +80,25 @@ export class SampleAnalyzer {
       };
     }
     return { analysis: cleanAnalysis(sample), tokens: { input: 0, output: 0 } };
+  }
+
+  /** Test answers for the CCR functions. */
+  async completeJson(prompt) {
+    if (prompt.includes('"matches"')) {
+      return { matches: [
+        { id: 'CCR-URB-0009', shares: 'Test mode: several logics meet at one threshold.', differs: 'Test mode: sample comparison, not a real reading.' },
+        { id: 'CCR-URB-0001', shares: 'Test mode: an edge where neither side governs.', differs: 'Test mode: sample comparison.' },
+      ] };
+    }
+    return {
+      domain: 'URB', title: 'Test draft (no Claude)', signature: { en: 'Two rhythms, one kerb', de: 'Zwei Rhythmen, ein Bordstein', el: 'Δύο ρυθμοί, ένα κράσπεδο' },
+      phaseP0: 'Test mode: a sample draft is shown instead of a real one.',
+      contextures: [{ name: 'First user', logic: 'Speed' }, { name: 'Second user', logic: 'Safety' }],
+      thresholds: [{ title: 'The meeting point', between: ['K₁', 'K₂'], type: 'trap', note: 'Sample.' }],
+      moves: [{ title: 'A time window', how: 'Separate hours.', connects: ['K₁', 'K₂'], test: 'No wait over 2 minutes.' }],
+      falseThird: 'A barrier.', od: 3,
+      refusals: [{ r: 'R1', result: 'Pass', why: 'Sample.' }, { r: 'R2', result: 'Conditional', why: 'Sample.' }, { r: 'R3', result: 'Pass', why: 'Sample.' }],
+      verdict: { class: 'conditional', text: 'Sample verdict.' }, remainder: 'Who sets the hours stays open.', related: ['CCR-URB-0009'],
+    };
   }
 }

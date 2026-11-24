@@ -1,4 +1,5 @@
 import express from 'express';
+import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { z, ZodError } from 'zod';
 import { clearCookie, cookieValue, createLoginLink, makeSession, normaliseEmail, readSession, sessionCookie, verifyLoginToken } from './auth.js';
@@ -6,6 +7,8 @@ import { applyBillingEvent } from './billing.js';
 import { KINDS } from './method.js';
 import { loginEmail } from './mailer.js';
 import { PAID, PLANS, monthKey, planOf } from './plans.js';
+
+const CCR = createRequire(import.meta.url)('../../ccr/ccr.js');
 
 class HttpError extends Error {
   constructor(status, code, message) {
@@ -25,6 +28,8 @@ class HttpError extends Error {
  * @param {() => number} [deps.clock]
  */
 export function createApp({ db, analyzer, billing, mailer, config, clock = () => Date.now() }) {
+  // The server may use the full registry, including private entries, from a file kept off the repository.
+  const registry = JSON.parse(readFileSync(config.ccrRegistryPath ?? new URL('../../ccr/registry.json', import.meta.url), 'utf8'));
   const app = express();
   const secure = config.baseUrl.startsWith('https://');
   const lastLoginRequest = new Map();
@@ -146,6 +151,45 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
     // Count only analyses that were delivered. The photo itself is not kept.
     db.addUsage(user.id, month);
     return { analysis: result.analysis, account: account(db.userById(user.id)) };
+  }));
+
+  // ── CCR library: related records and draft records ──
+  const ccrBody = z.object({
+    analysis: z.object({ subject: z.string().max(300), summary: z.string().max(2000).optional(), kind: z.string().max(10).optional(),
+      logics: z.array(z.any()).max(6), thresholds: z.array(z.any()).max(6), moves: z.array(z.any()).max(6), falseFix: z.string().max(1000).optional() }).passthrough(),
+    lang: z.enum(['el', 'en']).default('el'),
+    matches: z.array(z.object({ id: z.string() }).passthrough()).max(3).default([]),
+  });
+
+  app.post('/api/ccr/match', wrap(async (req) => {
+    requireJson(req);
+    requireUser(req);
+    const { analysis, lang } = ccrBody.parse(req.body);
+    try {
+      return { matches: CCR.cleanMatches(await analyzer.completeJson(CCR.matchPrompt(analysis, registry, lang)), registry) };
+    } catch (err) {
+      console.error('CCR match failed:', err?.message ?? err);
+      throw new HttpError(502, 'ccr', 'The comparison did not finish. Please try again.');
+    }
+  }));
+
+  // A draft is a full model answer, so it counts as one analysis of the month.
+  app.post('/api/ccr/draft', wrap(async (req) => {
+    requireJson(req);
+    const user = requireUser(req);
+    const { analysis, matches } = ccrBody.parse(req.body);
+    const month = monthKey(clock());
+    const plan = planOf(user);
+    if (db.usage(user.id, month) >= plan.limit) throw new HttpError(402, 'limit', `You have used all ${plan.limit} analyses of your plan this month.`);
+    let draft;
+    try {
+      draft = CCR.cleanDraft(await analyzer.completeJson(CCR.draftPrompt(analysis, matches)), registry);
+    } catch (err) {
+      console.error('CCR draft failed:', err?.message ?? err);
+      throw new HttpError(502, 'ccr', 'The draft did not finish. Please try again.');
+    }
+    db.addUsage(user.id, month);
+    return { draft, account: account(db.userById(user.id)) };
   }));
 
   // ── subscriptions ──

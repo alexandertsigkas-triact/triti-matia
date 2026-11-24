@@ -44,6 +44,7 @@ const app = createApp({
     baseUrl,
     sessionSecret: env.SESSION_SECRET ?? randomBytes(32).toString('hex'),
     appHtmlPath: fileURLToPath(new URL('../../index.html', import.meta.url)),
+    ccrRegistryPath: env.CCR_REGISTRY_PATH || undefined,
   },
 });
 

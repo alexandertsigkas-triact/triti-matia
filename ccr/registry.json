@@ -1,0 +1,485 @@
+{
+ "name": "CCR Library",
+ "publisher": "Triact",
+ "framework": "P·L·T (Polycontexturality · Liminality · Transjunction), created by Alexander Tsigkas",
+ "updated": "2026-11-24",
+ "domains": {
+  "URB": {
+   "en": "Architecture & urban",
+   "de": "Architektur & Stadt",
+   "el": "Αρχιτεκτονική & πόλη"
+  },
+  "MFG": {
+   "en": "Manufacturing",
+   "de": "Fertigung",
+   "el": "Παραγωγή"
+  },
+  "SEC": {
+   "en": "Security",
+   "de": "Sicherheit",
+   "el": "Ασφάλεια"
+  },
+  "CCU": {
+   "en": "Climate technology",
+   "de": "Klimatechnik",
+   "el": "Κλιματική τεχνολογία"
+  },
+  "SYS": {
+   "en": "AI & systems",
+   "de": "KI & Systeme",
+   "el": "ΤΝ & συστήματα"
+  },
+  "NRG": {
+   "en": "Energy",
+   "de": "Energie",
+   "el": "Ενέργεια"
+  },
+  "DIP": {
+   "en": "Diplomacy",
+   "de": "Diplomatie",
+   "el": "Διπλωματία"
+  },
+  "ADM": {
+   "en": "Administration",
+   "de": "Verwaltung",
+   "el": "Διοίκηση"
+  }
+ },
+ "entries": [
+  {
+   "id": "CCR-URB-0001",
+   "aliases": [],
+   "domain": "URB",
+   "title": "Rail edge, Athens",
+   "date": "2026-06",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A rail edge in Athens where neighbourhood and infrastructure meet with no shared threshold.",
+   "note": "Negative instance: a liminal trap.",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0002",
+   "aliases": [],
+   "domain": "URB",
+   "title": "Rural veranda",
+   "date": "2026-06",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A rural veranda as a threshold between house, field and passers-by that works.",
+   "note": "Positive instance: a threshold fulfilled.",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0003",
+   "aliases": [],
+   "domain": "URB",
+   "title": "The Two Stones, Agia, Larisa",
+   "date": "",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A field plate on two stones at Agia, Larisa, read as a threshold between owners, use and landscape.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0004",
+   "aliases": [],
+   "domain": "URB",
+   "title": "Skin Without Load",
+   "date": "",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A building envelope that carries no load: facade logic separated from structural logic.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0005",
+   "aliases": [],
+   "domain": "URB",
+   "title": "One Light, Two Breaths — Pandemic Architecture Competition brief",
+   "date": "",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A competition brief for pandemic architecture: shared light and separate air between residents and care.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0006",
+   "aliases": [],
+   "domain": "URB",
+   "title": "Casa Elettrica (Figini & Pollini, 1930)",
+   "date": "2026-08",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": {
+    "en": "The crossing shown, not made",
+    "de": null,
+    "el": null
+   },
+   "verdict": {
+    "class": "conditional",
+    "en": "Certified at the level of the manifesto; uncertified at the level of dwelling"
+   },
+   "gate": {
+    "od": "3–4"
+   },
+   "summary": "A 1930 rationalist house where technology and dwelling are shown together but not mediated.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0007",
+   "aliases": [
+    "CCR-URB-KAV-0001"
+   ],
+   "domain": "URB",
+   "title": "Kavala port — analysis of existing works",
+   "date": "2026-08",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Analysis of others' work",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "Meta-analysis of existing works at Kavala port: city, port authority, university and waterfront users.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-URB-0009",
+   "aliases": [
+    "CCR-URB-ELA-0001"
+   ],
+   "domain": "URB",
+   "title": "Elaionas: Six Logics, One Threshold",
+   "date": "2026-10-04",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Analysis of a published brief",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "An Athens industrial district under regeneration where six logics meet at one threshold.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-MFG-0001",
+   "aliases": [],
+   "domain": "MFG",
+   "title": "Steel fabrication line (client, anonymised)",
+   "date": "2026-06",
+   "status": "Final",
+   "visibility": "anonymise",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A steel fabrication value stream: sales, scheduling, workshop and site erection meet at hand-offs and stock.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-MFG-0002",
+   "aliases": [],
+   "domain": "MFG",
+   "title": "Steel fabrication line, second entry (client, anonymised)",
+   "date": "2026-06",
+   "status": "Final",
+   "visibility": "anonymise",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "Second reading of the steel fabrication value stream, after the first interventions.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-SEC-0001",
+   "aliases": [],
+   "domain": "SEC",
+   "title": "Neither Open Nor Sealed — data security",
+   "date": "2026-09",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "Data security as five incompatible contextures (legal, engineering, business, data subject, adversary); zero trust as permanent threshold; privacy-enhancing technologies as transjunction.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-CCU-0001",
+   "aliases": [],
+   "domain": "CCU",
+   "title": "Carbon capture — reading of an academic paper",
+   "date": "",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A carbon-capture paper where chemistry, plant economics and climate accounting meet.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-SYS-0001",
+   "aliases": [],
+   "domain": "SYS",
+   "title": "CCR libraries as gates above language models",
+   "date": "",
+   "status": "Final",
+   "visibility": "public",
+   "kind": "Method note",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "Method note: a library of cases as a polycontextural gate above monocontextural language models.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-SYS-0002",
+   "aliases": [],
+   "domain": "SYS",
+   "title": "Prompt Injection as Contexture Collapse",
+   "date": "2026-10-14",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "Prompt injection read as the collapse of instruction and data contextures into one channel.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-SYS-0003",
+   "aliases": [],
+   "domain": "SYS",
+   "title": "The Score That Closed Too Soon — Dutch childcare-benefits model",
+   "date": "2026-11-09",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": {
+    "en": "The score that closed too soon",
+    "de": "Der Score, der zu früh schloss",
+    "el": "Το σκορ που έκλεισε πρόωρα"
+   },
+   "verdict": {
+    "class": "uncertified",
+    "en": "Uncertified on all three refusals"
+   },
+   "gate": {
+    "od": 5,
+    "fit": 8,
+    "ret": 2,
+    "r": [
+     "Fail",
+     "Fail",
+     "Fail"
+    ]
+   },
+   "summary": "An algorithmic risk score that closed families' cases before law, care and evidence could meet.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-NRG-0001",
+   "aliases": [],
+   "domain": "NRG",
+   "title": "Synchrony Refused, Connection Kept — SAFEr Grid",
+   "date": "2026-11-07",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": {
+    "en": "Synchrony refused, connection kept",
+    "de": "Synchronie verweigert, Verbindung bewahrt",
+    "el": "Συγχρονία αρνημένη, σύνδεση διατηρημένη"
+   },
+   "verdict": {
+    "class": "conditional",
+    "en": "Certified (technical) · uncertified (institutional)"
+   },
+   "gate": {
+    "od": "~4",
+    "r": [
+     "Pass",
+     "Pass",
+     "Conditional"
+    ]
+   },
+   "summary": "A grid that replaces synchronous frequency balance with store-and-forward balancing.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-NRG-0002",
+   "aliases": [],
+   "domain": "NRG",
+   "title": "Where Compute Can Return — Kozani data centre",
+   "date": "2026-11-08",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": {
+    "en": "The right ground, the wrong temperature",
+    "de": "Der richtige Ort, die falsche Temperatur",
+    "el": "Ο σωστός τόπος, η λάθος θερμοκρασία"
+   },
+   "verdict": {
+    "class": "uncertified",
+    "en": "Uncertified as announced; conditional if reconfigured"
+   },
+   "gate": {
+    "od": 4,
+    "fit": 12,
+    "ret": 6,
+    "r": [
+     "Conditional",
+     "Fail",
+     "Conditional"
+    ]
+   },
+   "summary": "A data centre at a former lignite plant: grid, water, heat, jobs and land meet.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-NRG-0003",
+   "aliases": [],
+   "domain": "NRG",
+   "title": "The Right Temperature, the Wrong Ground — Amsterdam-Zuidoost",
+   "date": "2026-11-08",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": {
+    "en": "The right temperature, the wrong ground",
+    "de": "Die richtige Temperatur, der falsche Ort",
+    "el": "Η σωστή θερμοκρασία, ο λάθος τόπος"
+   },
+   "verdict": {
+    "class": "uncertified",
+    "en": "Uncertified"
+   },
+   "gate": {
+    "od": 5,
+    "fit": 6,
+    "ret": 8,
+    "r": [
+     "Fail",
+     "Conditional",
+     "Fail"
+    ]
+   },
+   "summary": "A data centre in a dense urban district: heat reuse fits, but land and grid do not.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-SYS-0004",
+   "aliases": [
+    "CCR-SYS-0002 (Sept 2026)"
+   ],
+   "domain": "SYS",
+   "title": "Canvas als Prompt — the whole canvas as a prompt",
+   "date": "2026-09",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A vendor claim that fuses team, tool and prompt logics into one surface: conjunction sold as synthesis.",
+   "note": "Proposed number; was issued as SYS-0002 in September.",
+   "numberToConfirm": true
+  },
+  {
+   "id": "CCR-SYS-0005",
+   "aliases": [
+    "CCR-SYS-0003 (Sept 2026)"
+   ],
+   "domain": "SYS",
+   "title": "Swiss nuclear new-build referendum",
+   "date": "2026-09",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": {
+    "en": "Every outcome a Pyrrhic victory",
+    "de": null,
+    "el": null
+   },
+   "verdict": null,
+   "gate": null,
+   "summary": "A yes/no ballot that can register only political legitimacy while supply security, decarbonisation and capital stay blocked.",
+   "note": "Proposed number; was issued as SYS-0003 in September. Could also sit in NRG.",
+   "numberToConfirm": true
+  },
+  {
+   "id": "CCR-DIP-0001",
+   "aliases": [],
+   "domain": "DIP",
+   "title": "US–Iran Memorandum of Understanding — trap configuration",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "A draft diplomatic instrument read as a liminal trap: pervasive deferral, status-quo freeze, reversibility asymmetry.",
+   "note": "",
+   "numberToConfirm": false
+  },
+  {
+   "id": "CCR-DIP-0002",
+   "aliases": [],
+   "domain": "DIP",
+   "title": "US–Iran Memorandum of Understanding — seam configuration",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": null,
+   "summary": "The same instrument read as a seam: proportionality, an executive mechanism and UN Security Council reincorporation.",
+   "note": "",
+   "numberToConfirm": false
+  }
+ ]
+}

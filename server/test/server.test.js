@@ -197,3 +197,26 @@ describe('the method', () => {
     expect(d.thresholds[0]).toMatchObject({ between: [0], x: 100 });
   });
 });
+
+describe('CCR library', () => {
+  it('finds related records only among registry ids, and drafts an unnumbered record that counts as an analysis', async () => {
+    const { call, signIn } = await start();
+    const analysis = { subject: 'School gate', summary: 's', kind: 'space', logics: [{ name: 'Parent', wants: 'Speed' }], thresholds: [], moves: [] };
+    expect((await call('POST', '/api/ccr/match', { analysis })).status).toBe(401);
+    await signIn();
+    const m = await call('POST', '/api/ccr/match', { analysis, lang: 'en' });
+    expect(m.status).toBe(200);
+    expect(m.body.matches.map((x) => x.id)).toEqual(['CCR-URB-0009', 'CCR-URB-0001']);
+    const d = await call('POST', '/api/ccr/draft', { analysis, matches: m.body.matches });
+    expect(d.body.draft).toMatchObject({ number: 'CCR-URB-????', status: 'Draft — number to be assigned', related: ['CCR-URB-0009'] });
+    expect(d.body.draft.contextures.map((c) => c.k)).toEqual(['K₁', 'K₂']);
+    expect(d.body.account.remaining).toBe(2);
+  });
+
+  it('keeps private entries out of the public registry file', async () => {
+    const { readFileSync } = await import('node:fs');
+    const reg = JSON.parse(readFileSync(new URL('../../ccr/registry.json', import.meta.url), 'utf8'));
+    expect(reg.entries.some((x) => x.visibility === 'private')).toBe(false);
+    expect(new Set(reg.entries.map((x) => x.id)).size).toBe(reg.entries.length);
+  });
+});
