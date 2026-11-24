@@ -1,5 +1,6 @@
 """
-The CCR registry, rebuilt from the 9 Nov 2026 master register.
+The official CCR registry (adopted 24 Nov 2026), rebuilt from the 9 Nov 2026 master register.
+This file is the source of record: add new entries here.
 Run:  python3 build_registry.py
 Writes registry.json (public and anonymised entries only; safe for the public repository).
 Private entries go in private.json (not committed); with PRIVATE_OUT set, a full file for the server is written too.
@@ -40,9 +41,9 @@ e("CCR-NRG-0003","NRG","The Right Temperature, the Wrong Ground — Amsterdam-Zu
   verdict={"class":"uncertified","en":"Uncertified"},gate={"od":5,"fit":6,"ret":8,"r":["Fail","Conditional","Fail"]})
 # Entries from earlier chats whose numbers clash or were never added to the master register.
 e("CCR-SYS-0004","SYS","Canvas als Prompt — the whole canvas as a prompt","2026-09","Provisional","public","A vendor claim that fuses team, tool and prompt logics into one surface: conjunction sold as synthesis.",
-  aliases=["CCR-SYS-0002 (Sept 2026)"],confirm=True,note="Proposed number; was issued as SYS-0002 in September.")
+  aliases=["CCR-SYS-0002 (Sept 2026)"],note="Renumbered 24 Nov 2026; issued as SYS-0002 in September.")
 e("CCR-SYS-0005","SYS","Swiss nuclear new-build referendum","2026-09","Provisional","public","A yes/no ballot that can register only political legitimacy while supply security, decarbonisation and capital stay blocked.",
-  aliases=["CCR-SYS-0003 (Sept 2026)"],signature=U("Every outcome a Pyrrhic victory"),confirm=True,note="Proposed number; was issued as SYS-0003 in September. Could also sit in NRG.")
+  aliases=["CCR-SYS-0003 (Sept 2026)"],signature=U("Every outcome a Pyrrhic victory"),note="Renumbered 24 Nov 2026; issued as SYS-0003 in September.")
 e("CCR-DIP-0001","DIP","US–Iran Memorandum of Understanding — trap configuration","2026-06","Provisional","public","A draft diplomatic instrument read as a liminal trap: pervasive deferral, status-quo freeze, reversibility asymmetry.")
 e("CCR-DIP-0002","DIP","US–Iran Memorandum of Understanding — seam configuration","2026-06","Provisional","public","The same instrument read as a seam: proportionality, an executive mechanism and UN Security Council reincorporation.")
 

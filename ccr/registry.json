@@ -424,8 +424,8 @@
    "verdict": null,
    "gate": null,
    "summary": "A vendor claim that fuses team, tool and prompt logics into one surface: conjunction sold as synthesis.",
-   "note": "Proposed number; was issued as SYS-0002 in September.",
-   "numberToConfirm": true
+   "note": "Renumbered 24 Nov 2026; issued as SYS-0002 in September.",
+   "numberToConfirm": false
   },
   {
    "id": "CCR-SYS-0005",
@@ -446,8 +446,8 @@
    "verdict": null,
    "gate": null,
    "summary": "A yes/no ballot that can register only political legitimacy while supply security, decarbonisation and capital stay blocked.",
-   "note": "Proposed number; was issued as SYS-0003 in September. Could also sit in NRG.",
-   "numberToConfirm": true
+   "note": "Renumbered 24 Nov 2026; issued as SYS-0003 in September.",
+   "numberToConfirm": false
   },
   {
    "id": "CCR-DIP-0001",
