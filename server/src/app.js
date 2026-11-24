@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { z, ZodError } from 'zod';
 import { clearCookie, cookieValue, createLoginLink, makeSession, normaliseEmail, readSession, sessionCookie, verifyLoginToken } from './auth.js';
 import { applyBillingEvent } from './billing.js';
-import { KINDS } from './method.js';
+import { KINDS, translatePrompt } from './method.js';
 import { loginEmail } from './mailer.js';
 import { PAID, PLANS, monthKey, planOf } from './plans.js';
 
@@ -190,6 +190,20 @@ export function createApp({ db, analyzer, billing, mailer, config, clock = () =>
     }
     db.addUsage(user.id, month);
     return { draft, account: account(db.userById(user.id)) };
+  }));
+
+  // ── translation of a finished reading (text only; free for signed-in users) ──
+  const trBody = z.object({ texts: z.record(z.any()).refine((v) => JSON.stringify(v).length <= 20000, 'too long'), to: z.enum(['el', 'en', 'de']) });
+  app.post('/api/translate', wrap(async (req) => {
+    requireJson(req);
+    requireUser(req);
+    const { texts, to } = trBody.parse(req.body);
+    try {
+      return { texts: await analyzer.completeJson(translatePrompt(texts, to)) };
+    } catch (err) {
+      console.error('Translation failed:', err?.message ?? err);
+      throw new HttpError(502, 'translate', 'The translation did not finish. Please try again.');
+    }
   }));
 
   // ── subscriptions ──

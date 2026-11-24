@@ -65,3 +65,9 @@ function cleanVsm(v) {
     unreadable: (Array.isArray(v.unreadable) ? v.unreadable : []).slice(0, 8).map(String),
   };
 }
+
+/** Translation of a finished reading (text fields only; numbers and positions stay). */
+export function translatePrompt(texts, to) {
+  const language = { el: 'Modern Greek', en: 'English (British spelling)', de: 'German (standard German)' }[to];
+  return `Translate the text values of this JSON into ${language}. Keep exactly the same keys, the same array lengths and the same order. Keep the plain everyday register, the concrete details and the tone (questions stay questions; the "voice" fields stay in the first person). Translate meaning, not word for word. Do not add or drop anything. Answer with the JSON only.\n\n${JSON.stringify(texts)}`;
+}

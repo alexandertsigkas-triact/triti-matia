@@ -102,6 +102,9 @@
   .r.Pass { color: var(--a); } .r.Conditional { color: var(--b); } .r.Fail { color: var(--signal); }
   .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
   .plan { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 6px; background: var(--paper); }
+  .langbar { margin: 4px 0 10px; }
+  .langbar.note { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 12px; border: 1px dashed var(--line, #ccc); border-radius: 10px; }
+  .linkbtn { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; font: inherit; cursor: pointer; }
   .plan.current { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
   .plan b { font: 700 18px/1.2 var(--display); }
   .meter { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
@@ -327,7 +330,7 @@ const T = {
     step1: '1. Φωτογραφία', take: 'Τραβήξτε ή επιλέξτε φωτογραφία', retake: 'Άλλη φωτογραφία',
     context: 'Τι είναι και τι σας απασχολεί; (προαιρετικά)',
     placeholder: 'π.χ. Η είσοδος του σχολείου μας το πρωί· οι γονείς σταθμεύουν και τα παιδιά περνούν ανάμεσα.',
-    analyse: 'Ανάλυση', working: 'Η φωτογραφία διαβάζεται… (περίπου 20–40 δευτερόλεπτα)', copy: 'Αντιγραφή κειμένου', copied: 'Αντιγράφηκε.',
+    analyse: 'Ανάλυση', working: 'Η φωτογραφία διαβάζεται… (περίπου 20–40 δευτερόλεπτα)', copy: 'Αντιγραφή κειμένου', copied: 'Αντιγράφηκε.', writtenIn: (l) => `Η ανάλυση γράφτηκε στα ${l}.`, translate: (l) => `Μετάφραση στα ${l}`, translating: 'Μετάφραση…', showOriginal: (l) => `Αρχικό κείμενο (${l})`, trFailed: 'Η μετάφραση δεν ολοκληρώθηκε. Δοκιμάστε ξανά.', langNames: { el: 'Ελληνικά', en: 'Αγγλικά', de: 'Γερμανικά' },
     plain: 'Απλά λόγια', expert: 'Όροι P·L·T',
     kinds: { auto: 'Αυτόματα', space: 'Κτίριο ή χώρος', work: 'Εργασία ή διαδικασία', vsm: 'Χάρτης ροής αξίας (VSM)', art: 'Έργο τέχνης' },
     hLogics: 'Ποιες λογικές συναντιούνται', hThresholds: 'Πού συναντιούνται', hMoves: 'Τι θα τις έφερνε σε επαφή',
@@ -365,7 +368,7 @@ const T = {
     step1: '1. Photo', take: 'Take or choose a photo', retake: 'Another photo',
     context: 'What is it, and what concerns you? (optional)',
     placeholder: 'e.g. Our school entrance in the morning; parents park and children pass between the cars.',
-    analyse: 'Analyse', working: 'Reading the photo… (about 20–40 seconds)', copy: 'Copy text', copied: 'Copied.',
+    analyse: 'Analyse', working: 'Reading the photo… (about 20–40 seconds)', copy: 'Copy text', copied: 'Copied.', writtenIn: (l) => `This reading was written in ${l}.`, translate: (l) => `Translate into ${l}`, translating: 'Translating…', showOriginal: (l) => `Original text (${l})`, trFailed: 'The translation did not finish. Please try again.', langNames: { el: 'Greek', en: 'English', de: 'German' },
     plain: 'Plain words', expert: 'P·L·T terms',
     kinds: { auto: 'Automatic', space: 'Building or space', work: 'Work or process', vsm: 'Value stream map (VSM)', art: 'Artwork' },
     hLogics: 'Which logics meet here', hThresholds: 'Where they meet', hMoves: 'What would bring them into contact',
@@ -403,7 +406,7 @@ const T = {
     step1: '1. Foto', take: 'Foto aufnehmen oder auswählen', retake: 'Anderes Foto',
     context: 'Was ist es, und was beschäftigt Sie? (optional)',
     placeholder: 'z. B. Unser Schuleingang am Morgen; Eltern halten an, Kinder laufen zwischen den Autos.',
-    analyse: 'Analysieren', working: 'Das Foto wird gelesen … (etwa 20–40 Sekunden)', copy: 'Text kopieren', copied: 'Kopiert.',
+    analyse: 'Analysieren', working: 'Das Foto wird gelesen … (etwa 20–40 Sekunden)', copy: 'Text kopieren', copied: 'Kopiert.', writtenIn: (l) => `Diese Analyse wurde auf ${l} geschrieben.`, translate: (l) => `Ins ${l === 'Englisch' ? 'Englische' : l === 'Griechisch' ? 'Griechische' : 'Deutsche'} übersetzen`, translating: 'Wird übersetzt …', showOriginal: (l) => `Originaltext (${l})`, trFailed: 'Die Übersetzung wurde nicht abgeschlossen. Bitte erneut versuchen.', langNames: { el: 'Griechisch', en: 'Englisch', de: 'Deutsch' },
     plain: 'Einfache Worte', expert: 'P·L·T-Begriffe',
     kinds: { auto: 'Automatisch', space: 'Gebäude oder Raum', work: 'Arbeit oder Prozess', vsm: 'Wertstromkarte (VSM)', art: 'Kunstwerk' },
     hLogics: 'Welche Logiken sich hier begegnen', hThresholds: 'Wo sie sich begegnen', hMoves: 'Was sie in Kontakt bringen würde',
@@ -542,6 +545,7 @@ function setLang(l) {
   $('#tFooter').textContent = t('footer');
   renderKinds();
   renderAccount();
+  current.original = false;
   if (current.example) current.data = EXAMPLE[lang];
   render();
 }
@@ -553,50 +557,132 @@ function renderKinds() {
 
 function code(prefix, i) { return expert ? `<span class="code">${prefix}${i + 1}</span>` : ''; }
 
+// A reading keeps one language: its own text and its headings together.
+// Switching the page language offers a translation instead of mixing two languages.
+let RL = 'el';
+function r(k) { return T[RL][k]; }
+function detectLang(d) {
+  const txt = [d.subject, d.summary].join(' ');
+  if (/[Ͱ-Ͽ]/.test(txt)) return 'el';
+  if (/[äöüß]|\b(der|die|das|und|nicht|ist)\b/i.test(txt)) return 'de';
+  return 'en';
+}
+function readingLang(d) { return d.lang || (d.lang = detectLang(d)); }
+const TR_TEXT = { top: ['subject', 'surprise', 'summary', 'falseFix', 'question', 'limits'], logics: ['name', 'wants', 'evidence', 'voice'], thresholds: ['title', 'happens', 'deeper'], moves: ['title', 'how', 'test'] };
+function textsOf(d) {
+  const o = {};
+  for (const k of TR_TEXT.top) if (d[k]) o[k] = d[k];
+  for (const k of ['logics', 'thresholds', 'moves']) o[k] = (d[k] || []).map((x) => Object.fromEntries(TR_TEXT[k].filter((f) => x[f]).map((f) => [f, x[f]])));
+  o.open = d.open || [];
+  return o;
+}
+function withTexts(d, tx) {
+  const str = (v, f) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, 2000) : f);
+  const out = { ...d };
+  for (const k of TR_TEXT.top) if (d[k]) out[k] = str(tx[k], d[k]);
+  for (const k of ['logics', 'thresholds', 'moves']) out[k] = (d[k] || []).map((x, i) => {
+    const y = { ...x }, t2 = (tx[k] || [])[i] || {};
+    for (const f of TR_TEXT[k]) if (x[f]) y[f] = str(t2[f], x[f]);
+    return y;
+  });
+  out.open = (d.open || []).map((q, i) => str((tx.open || [])[i], q));
+  return out;
+}
+function translatePrompt(texts, to) {
+  const language = { el: 'Modern Greek', en: 'English (British spelling)', de: 'German (standard German)' }[to];
+  return `Translate the text values of this JSON into ${language}. Keep exactly the same keys, the same array lengths and the same order. Keep the plain everyday register, the concrete details and the tone (questions stay questions; the "voice" fields stay in the first person). Translate meaning, not word for word. Do not add or drop anything. Answer with the JSON only.\n\n${JSON.stringify(texts)}`;
+}
+// What to show now: the reading in the page language if it exists, else in its own language.
+function shown(d) {
+  if (current.example) return { d, l: lang };
+  const own = readingLang(d);
+  if (own === lang || current.original) return { d, l: own };
+  const tx = d.tr && d.tr[lang];
+  return tx ? { d: withTexts(d, tx), l: lang } : { d, l: own };
+}
+let trBusy = false;
+async function translateReading() {
+  const d = current.data; if (!d || trBusy) return;
+  $('#error').classList.add('hidden');
+  trBusy = true; current.original = false; render();
+  try {
+    const texts = textsOf(d);
+    let out;
+    if (SERVER) out = (await apiCall('POST', '/api/translate', { texts, to: lang })).texts;
+    else {
+      const sample = await sampleCap();
+      if (!sample) throw new Error(t('noClaude'));
+      out = await sample.json(translatePrompt(texts, lang), { cache: false });
+    }
+    if (!out || typeof out !== 'object') throw new Error('empty');
+    d.tr = { ...(d.tr || {}), [lang]: out };
+    if (current.at) updateHistory();
+  } catch (e) {
+    showError(e.status === 401 ? t('acct').needSignin : e.message === t('noClaude') ? e.message : t('trFailed'));
+  } finally { trBusy = false; render(); }
+}
+function langBar(d) {
+  if (current.example) return '';
+  const own = readingLang(d);
+  if (own === lang) return '';
+  const N = t('langNames');
+  if (trBusy) return `<p class="status langbar"><span class="spinner" aria-hidden="true"></span>${t('translating')}</p>`;
+  if (d.tr && d.tr[lang]) return `<p class="muted langbar"><button class="linkbtn" id="trToggle">${current.original ? t('translate')(N[lang]) : t('showOriginal')(N[own])}</button></p>`;
+  return `<div class="langbar note"><span>${t('writtenIn')(N[own])}</span> <button class="btn ghost" id="trGo">${t('translate')(N[lang])}</button></div>`;
+}
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#trGo')) { translateReading(); return; }
+  if (e.target.closest('#trToggle')) { current.original = !current.original; render(); }
+});
+
 function render() {
-  const d = current.data;
+  const raw = current.data;
+  if (!raw) { $('#result').innerHTML = current.image ? `<div class="photo"><img src="${current.image}" alt=""></div>` : ''; return; }
+  const view = shown(raw), d = view.d;
+  RL = view.l;
   if (!d) { $('#result').innerHTML = current.image ? `<div class="photo"><img src="${current.image}" alt=""></div>` : ''; return; }
   const img = current.example ? SKETCH : `<img src="${current.image}" alt="${esc(d.subject)}">`;
   const pins = (d.thresholds || []).map((th, i) =>
-    `<button class="pin" data-pin="${i}" style="left:${Math.min(96, Math.max(4, +th.x || 50))}%;top:${Math.min(96, Math.max(4, +th.y || 50))}%" aria-label="${esc(t('lookAgain'))}: ${esc(th.title)}">${i + 1}</button>`).join('');
+    `<button class="pin" data-pin="${i}" style="left:${Math.min(96, Math.max(4, +th.x || 50))}%;top:${Math.min(96, Math.max(4, +th.y || 50))}%" aria-label="${esc(r('lookAgain'))}: ${esc(th.title)}">${i + 1}</button>`).join('');
   const logicTag = (i) => `<span class="tag" style="background:${COLORS[i % 4]}">${esc(shortName(d.logics[i]?.name, i))}</span>`;
   $('#result').innerHTML = `
-    ${current.example ? `<p class="example">${t('example')}</p><p class="muted">${t('exampleNote')}</p>` : ''}
+    ${current.example ? `<p class="example">${r('example')}</p><p class="muted">${r('exampleNote')}</p>` : ''}
+    ${langBar(raw)}
     <h2>${esc(d.subject)}</h2>
-    ${d.detected && d.detected !== 'other' && d.kind === 'auto' ? `<p class="muted">${t('detected')}: <strong>${esc(t('kinds')[d.detected])}</strong></p>` : ''}
+    ${d.detected && d.detected !== 'other' && d.kind === 'auto' ? `<p class="muted">${r('detected')}: <strong>${esc(r('kinds')[d.detected])}</strong></p>` : ''}
     <div class="photo">${img}${pins}</div>
-    ${d.surprise ? `<div class="surprise"><small>${t('surprise')}</small>${esc(d.surprise)}</div>` : ''}
+    ${d.surprise ? `<div class="surprise"><small>${r('surprise')}</small>${esc(d.surprise)}</div>` : ''}
     <p>${esc(d.summary)}</p>
     ${d.vsm ? vsmSection(d.vsm) : ''}
-    <h3>${t('hLogics')}</h3>
+    <h3>${r('hLogics')}</h3>
     ${(d.logics || []).map((l, i) => `<div class="logic" style="--c0:${COLORS[i % 4]}">
-        <div class="row"><strong>${esc(l.name)}</strong>${code(t('codes').logic, i)}</div>
-        <p><span class="muted">${t('wants')}:</span> ${esc(l.wants)}</p>
-        <p class="muted">${t('seen')}: ${esc(l.evidence)}</p>
-        ${l.voice ? `<details class="again"><summary>${t('seenFrom')}</summary><p class="voice">${esc(l.voice)}</p></details>` : ''}</div>`).join('')}
-    <h3>${t('hThresholds')}</h3>
+        <div class="row"><strong>${esc(l.name)}</strong>${code(r('codes').logic, i)}</div>
+        <p><span class="muted">${r('wants')}:</span> ${esc(l.wants)}</p>
+        <p class="muted">${r('seen')}: ${esc(l.evidence)}</p>
+        ${l.voice ? `<details class="again"><summary>${r('seenFrom')}</summary><p class="voice">${esc(l.voice)}</p></details>` : ''}</div>`).join('')}
+    <h3>${r('hThresholds')}</h3>
     ${(d.thresholds || []).map((th, i) => `<div class="item"><span class="num">${i + 1}</span><div style="display:grid;gap:4px">
-        <div class="row"><strong>${esc(th.title)}</strong>${code(t('codes').threshold, i)}</div>
-        <div class="row muted">${t('between')} ${(th.between || []).filter((j) => d.logics[j]).map(logicTag).join(' ')}</div>
+        <div class="row"><strong>${esc(th.title)}</strong>${code(r('codes').threshold, i)}</div>
+        <div class="row muted">${r('between')} ${(th.between || []).filter((j) => d.logics[j]).map(logicTag).join(' ')}</div>
         <p>${esc(th.happens)}</p>
-        ${th.deeper ? `<details class="again" id="th-${i}"><summary>${t('lookAgain')}</summary><p>${esc(th.deeper)}</p></details>` : ''}</div></div>`).join('')}
-    <h3>${t('hMoves')}</h3>
+        ${th.deeper ? `<details class="again" id="th-${i}"><summary>${r('lookAgain')}</summary><p>${esc(th.deeper)}</p></details>` : ''}</div></div>`).join('')}
+    <h3>${r('hMoves')}</h3>
     ${(d.moves || []).map((m, i) => `<div class="item"><span class="num move">${String.fromCharCode(65 + i)}</span><div style="display:grid;gap:4px">
-        <div class="row"><strong>${esc(m.title)}</strong>${code(t('codes').move, i)}${m.threshold ? `<span class="muted">→ ${m.threshold}</span>` : ''}</div>
+        <div class="row"><strong>${esc(m.title)}</strong>${code(r('codes').move, i)}${m.threshold ? `<span class="muted">→ ${m.threshold}</span>` : ''}</div>
         <p>${esc(m.how)}</p>
         <div class="row">${(m.connects || []).filter((j) => d.logics[j]).map(logicTag).join(' ')}</div>
-        <p class="muted">${t('test')}: ${esc(m.test)}</p></div></div>`).join('')}
-    ${d.falseFix ? `<div class="warn"><div class="row"><strong>${t('hFalse')}</strong>${expert ? `<span class="code">${t('codes').falseFix}</span>` : ''}</div><p>${esc(d.falseFix)}</p></div>` : ''}
-    ${d.question ? `<div class="question"><small>${t('question')}</small>${esc(d.question)}</div>` : ''}
-    ${(d.open || []).length ? `<h3>${t('hOpen')}</h3><ul class="qs">${d.open.map((q) => `<li>${esc(q)}</li>`).join('')}</ul>` : ''}
-    ${d.limits ? `<p class="muted"><strong>${t('hLimits')}:</strong> ${esc(d.limits)}</p>` : ''}`;
+        <p class="muted">${r('test')}: ${esc(m.test)}</p></div></div>`).join('')}
+    ${d.falseFix ? `<div class="warn"><div class="row"><strong>${r('hFalse')}</strong>${expert ? `<span class="code">${r('codes').falseFix}</span>` : ''}</div><p>${esc(d.falseFix)}</p></div>` : ''}
+    ${d.question ? `<div class="question"><small>${r('question')}</small>${esc(d.question)}</div>` : ''}
+    ${(d.open || []).length ? `<h3>${r('hOpen')}</h3><ul class="qs">${d.open.map((q) => `<li>${esc(q)}</li>`).join('')}</ul>` : ''}
+    ${d.limits ? `<p class="muted"><strong>${r('hLimits')}:</strong> ${esc(d.limits)}</p>` : ''}`;
   renderCcr();
 }
 
 const fmt = (n, dec = 0) => n == null ? '—' : Number(n).toLocaleString({ el: 'el-GR', en: 'en-GB', de: 'de-DE' }[lang], { maximumFractionDigits: dec, minimumFractionDigits: 0 });
 
 function vsmSection(v) {
-  const V = t('vsm');
+  const V = r('vsm');
   const cell = (i, f, val) => `<td><input inputmode="decimal" data-p="${i}" data-f="${f}" value="${val ?? ''}" aria-label="${f}"></td>`;
   const top = (f, val) => `<input inputmode="decimal" data-top="${f}" value="${val ?? ''}" aria-label="${f}" style="width:90px">`;
   return `<h3>${V.title}</h3><p class="muted">${V.note}</p>
@@ -609,7 +695,7 @@ function vsmSection(v) {
 }
 
 function vsmFigsHtml(v) {
-  const V = t('vsm'), F = vsmFigures(v);
+  const V = r('vsm'), F = vsmFigures(v);
   const neckOver = F.neck !== null && F.takt && v.processes[F.neck].ct > F.takt;
   return `<div class="figs">
     <div class="fig"><b>${fmt(F.lead, 1)}</b><span>${V.lead} (${V.days})</span></div>
@@ -632,7 +718,7 @@ document.addEventListener('input', (e) => {
   } else return;
   const box = $('#vsmFigs'); if (box) box.innerHTML = vsmFigsHtml(v);
 });
-document.addEventListener('change', (e) => { if (e.target.closest('table.vsm, [data-top]') && current.at) updateHistory(); });
+document.addEventListener('change', (e) => { if (e.target.closesr('table.vsm, [data-top]') && current.at) updateHistory(); });
 
 function shortName(name, i) {
   const s = String(name || '').replace(/^(Η λογική (του|της|των)\s+|The\s+|logic of\s+)/i, '').replace(/[’']s logic$/i, '').replace(/ logic$/i, '');
@@ -640,20 +726,21 @@ function shortName(name, i) {
 }
 
 function asText() {
-  const d = current.data; if (!d || !d.logics) return '';
+  if (!current.data || !current.data.logics) return '';
+  const view = shown(current.data), d = view.d; RL = view.l;
   const L = (i) => d.logics[i]?.name || '';
   let vsmText = [];
   if (d.vsm) {
-    const V = t('vsm'), F = vsmFigures(d.vsm);
+    const V = r('vsm'), F = vsmFigures(d.vsm);
     vsmText = [V.title + ':', [V.process, V.invPcs, V.invDays, V.ct, V.co, V.up, V.ops].join(' | '),
       ...d.vsm.processes.map((p) => [p.name, p.invPcs, p.invDays, p.ct, p.co, p.uptime, p.operators].map((x) => x ?? '—').join(' | ')),
       `${V.lead}: ${fmt(F.lead, 1)} ${V.days} · ${V.va}: ${fmt(F.va)} s · ${V.ratio}: ${F.ratio == null ? '—' : fmt(F.ratio, 2) + '%'} · ${V.takt}: ${fmt(F.takt)} s`, ''];
   }
-  return [d.subject, '', ...(d.surprise ? [t('surprise') + ': ' + d.surprise, ''] : []), d.summary, '', ...vsmText, t('hLogics') + ':',
+  return [d.subject, '', ...(d.surprise ? [r('surprise') + ': ' + d.surprise, ''] : []), d.summary, '', ...vsmText, r('hLogics') + ':',
     ...d.logics.map((l, i) => `${expert ? 'K' + (i + 1) + ' ' : '- '}${l.name}: ${l.wants} (${l.evidence})`), '',
-    t('hThresholds') + ':', ...d.thresholds.map((th, i) => `${i + 1}. ${th.title} [${th.between.map(L).join(' / ')}]: ${th.happens}`), '',
-    t('hMoves') + ':', ...d.moves.map((m, i) => `${String.fromCharCode(65 + i)}. ${m.title}: ${m.how} ${t('test')}: ${m.test}`), '',
-    t('hFalse') + ': ' + d.falseFix, '', ...(d.question ? [t('question') + ': ' + d.question, ''] : []), t('hOpen') + ':', ...d.open.map((q) => '- ' + q), '', t('hLimits') + ': ' + d.limits, '', t('footer')].join('\n');
+    r('hThresholds') + ':', ...d.thresholds.map((th, i) => `${i + 1}. ${th.title} [${th.between.map(L).join(' / ')}]: ${th.happens}`), '',
+    r('hMoves') + ':', ...d.moves.map((m, i) => `${String.fromCharCode(65 + i)}. ${m.title}: ${m.how} ${r('test')}: ${m.test}`), '',
+    r('hFalse') + ': ' + d.falseFix, '', ...(d.question ? [r('question') + ': ' + d.question, ''] : []), r('hOpen') + ':', ...d.open.map((q) => '- ' + q), '', r('hLimits') + ': ' + d.limits, '', r('footer')].join('\n');
 }
 
 // Downscale the photo before sending: smaller, faster, and strips location data.
@@ -936,7 +1023,7 @@ $('#analyse').addEventListener('click', async () => {
     const result = await serverAnalyse();
     busy = false; $('#analyse').disabled = false; $('#status').textContent = '';
     if (result) {
-      current = { data: { ...clean(result), kind }, image: prepared.display, example: false, at: Date.now() };
+      current = { data: { ...clean(result), kind, lang }, image: prepared.display, example: false, at: Date.now() };
       render(); saveHistory();
       $('#result').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     }
@@ -952,7 +1039,7 @@ $('#analyse').addEventListener('click', async () => {
   $('#status').innerHTML = `<span class="spinner" aria-hidden="true"></span>${t('working')}`;
   try {
     const raw = await sample.json(prompt($('#context').value.trim()), { images: [photoBlob], modelTier: 'complex', cache: false });
-    current = { data: { ...clean(raw), kind }, image: prepared.display, example: false, at: Date.now() };
+    current = { data: { ...clean(raw), kind, lang }, image: prepared.display, example: false, at: Date.now() };
     render();
     saveHistory();
     $('#result').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });

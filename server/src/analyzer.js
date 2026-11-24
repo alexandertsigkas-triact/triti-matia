@@ -53,28 +53,28 @@ export class SampleAnalyzer {
   }
 
   async analyse({ kind, lang }) {
-    const el = lang !== 'en';
+    const L = (el, en, de) => ({ el, en, de }[lang] ?? en);
     const sample = {
-      subject: el ? 'Δοκιμαστική ανάλυση (χωρίς Claude)' : 'Test analysis (no Claude)',
-      summary: el
-        ? 'Ο διακομιστής τρέχει σε δοκιμαστική λειτουργία χωρίς κλειδί Claude, οπότε δείχνει πάντα αυτό το δείγμα. Με κλειδί, εδώ εμφανίζεται η πραγματική ανάγνωση της φωτογραφίας.'
-        : 'The server runs in test mode without a Claude key, so it always shows this sample. With a key, the real reading of the photo appears here.',
+      subject: L('Δοκιμαστική ανάλυση (χωρίς Claude)', 'Test analysis (no Claude)', 'Testanalyse (ohne Claude)'),
+      summary: L('Ο διακομιστής τρέχει σε δοκιμαστική λειτουργία χωρίς κλειδί Claude, οπότε δείχνει πάντα αυτό το δείγμα. Με κλειδί, εδώ εμφανίζεται η πραγματική ανάγνωση της φωτογραφίας.',
+        'The server runs in test mode without a Claude key, so it always shows this sample. With a key, the real reading of the photo appears here.',
+        'Der Server läuft im Testmodus ohne Claude-Schlüssel und zeigt deshalb immer dieses Beispiel. Mit Schlüssel erscheint hier die echte Lesart des Fotos.'),
       logics: [
-        { name: el ? 'Η λογική του πρώτου χρήστη' : 'The first user’s logic', wants: el ? 'Να περάσει γρήγορα.' : 'To get through quickly.', evidence: el ? 'Δείγμα.' : 'Sample.' },
-        { name: el ? 'Η λογική του δεύτερου χρήστη' : 'The second user’s logic', wants: el ? 'Να σταθεί με ασφάλεια.' : 'To stop safely.', evidence: el ? 'Δείγμα.' : 'Sample.' },
+        { name: L('Η λογική του πρώτου χρήστη', 'The first user’s logic', 'Die Logik der ersten Nutzerin'), wants: L('Να περάσει γρήγορα.', 'To get through quickly.', 'Schnell durchkommen.'), evidence: L('Δείγμα.', 'Sample.', 'Beispiel.') },
+        { name: L('Η λογική του δεύτερου χρήστη', 'The second user’s logic', 'Die Logik des zweiten Nutzers'), wants: L('Να σταθεί με ασφάλεια.', 'To stop safely.', 'Sicher anhalten.'), evidence: L('Δείγμα.', 'Sample.', 'Beispiel.') },
       ],
-      thresholds: [{ title: el ? 'Το σημείο συνάντησης' : 'The meeting point', between: [0, 1], happens: el ? 'Οι δύο ρυθμοί συγκρούονται.' : 'The two rhythms clash.', x: 50, y: 55 }],
-      moves: [{ title: el ? 'Χρονική ζώνη' : 'A time window', how: el ? 'Ξεχωριστές ώρες για κάθε χρήση.' : 'Separate hours for each use.', connects: [0, 1], threshold: 1, test: el ? 'Καμία αναμονή πάνω από 2 λεπτά.' : 'No wait over 2 minutes.' }],
-      falseFix: el ? 'Ένα εμπόδιο που απλώς μεταφέρει τη σύγκρουση αλλού.' : 'A barrier that just moves the clash elsewhere.',
-      open: [el ? 'Ποιος αποφασίζει τις ώρες;' : 'Who sets the hours?'],
-      limits: el ? 'Δείγμα δοκιμής.' : 'Test sample.',
+      thresholds: [{ title: L('Το σημείο συνάντησης', 'The meeting point', 'Der Treffpunkt'), between: [0, 1], happens: L('Οι δύο ρυθμοί συγκρούονται.', 'The two rhythms clash.', 'Die zwei Rhythmen stoßen zusammen.'), x: 50, y: 55 }],
+      moves: [{ title: L('Χρονική ζώνη', 'A time window', 'Ein Zeitfenster'), how: L('Ξεχωριστές ώρες για κάθε χρήση.', 'Separate hours for each use.', 'Eigene Zeiten für jede Nutzung.'), connects: [0, 1], threshold: 1, test: L('Καμία αναμονή πάνω από 2 λεπτά.', 'No wait over 2 minutes.', 'Keine Wartezeit über 2 Minuten.') }],
+      falseFix: L('Ένα εμπόδιο που απλώς μεταφέρει τη σύγκρουση αλλού.', 'A barrier that just moves the clash elsewhere.', 'Eine Absperrung, die den Konflikt nur verschiebt.'),
+      open: [L('Ποιος αποφασίζει τις ώρες;', 'Who sets the hours?', 'Wer legt die Zeiten fest?')],
+      limits: L('Δείγμα δοκιμής.', 'Test sample.', 'Testbeispiel.'),
     };
     if (kind === 'vsm') {
       sample.vsm = {
         processes: [
-          { name: el ? 'Χύτευση' : 'Casting', ct: 55, co: 45, uptime: 85, operators: 1, invPcs: 2400, invDays: null },
-          { name: el ? 'Μηχανουργική' : 'Machining', ct: 62, co: 20, uptime: 90, operators: 2, invPcs: null, invDays: 3.5 },
-          { name: el ? 'Έλεγχος' : 'Inspection', ct: 30, co: 0, uptime: 100, operators: 1, invPcs: 600, invDays: null },
+          { name: L('Χύτευση', 'Casting', 'Gießen'), ct: 55, co: 45, uptime: 85, operators: 1, invPcs: 2400, invDays: null },
+          { name: L('Μηχανουργική', 'Machining', 'Zerspanung'), ct: 62, co: 20, uptime: 90, operators: 2, invPcs: null, invDays: 3.5 },
+          { name: L('Έλεγχος', 'Inspection', 'Prüfung'), ct: 30, co: 0, uptime: 100, operators: 1, invPcs: 600, invDays: null },
         ],
         fgPcs: 1200, fgDays: null, demand: 400, available: 27600, unreadable: [],
       };
@@ -84,6 +84,12 @@ export class SampleAnalyzer {
 
   /** Test answers for the CCR functions. */
   async completeJson(prompt) {
+    if (prompt.startsWith('Translate the text values')) {
+      // Test mode: mark the text instead of translating it, so the flow can be seen.
+      const to = { Modern: 'EL', English: 'EN', German: 'DE' }[/into (\w+)/.exec(prompt)[1]];
+      const mark = (v) => (typeof v === 'string' ? `[${to}] ${v}` : Array.isArray(v) ? v.map(mark) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, mark(x)])) : v);
+      return mark(JSON.parse(prompt.slice(prompt.indexOf('\n\n') + 2)));
+    }
     if (prompt.includes('"matches"')) {
       return { matches: [
         { id: 'CCR-URB-0009', shares: 'Test mode: several logics meet at one threshold.', differs: 'Test mode: sample comparison, not a real reading.' },

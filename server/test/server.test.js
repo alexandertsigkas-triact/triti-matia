@@ -224,3 +224,26 @@ describe('CCR library', () => {
     expect(new Set(reg.entries.map((x) => x.id)).size).toBe(reg.entries.length);
   });
 });
+
+describe('languages', () => {
+  it('writes the test sample in the language asked for, German included', async () => {
+    const { call, signIn } = await start();
+    await signIn();
+    const r = await call('POST', '/api/analyse', { image: IMAGE, mediaType: 'image/jpeg', kind: 'space', lang: 'de' });
+    expect(r.status).toBe(200);
+    expect(r.body.analysis.subject).toBe('Testanalyse (ohne Claude)');
+    expect(JSON.stringify(r.body.analysis)).not.toMatch(/[Ͱ-Ͽ]/);
+  });
+
+  it('translates a finished reading for signed-in users without counting an analysis', async () => {
+    const { call, signIn } = await start();
+    const texts = { subject: 'Είσοδος σχολείου', logics: [{ name: 'Γονιός', wants: 'Ταχύτητα' }], open: ['Ποιος;'] };
+    expect((await call('POST', '/api/translate', { texts, to: 'de' })).status).toBe(401);
+    await signIn();
+    const r = await call('POST', '/api/translate', { texts, to: 'de' });
+    expect(r.status).toBe(200);
+    expect(r.body.texts).toEqual({ subject: '[DE] Είσοδος σχολείου', logics: [{ name: '[DE] Γονιός', wants: '[DE] Ταχύτητα' }], open: ['[DE] Ποιος;'] });
+    expect((await call('GET', '/api/me')).body.account.remaining).toBe(3);
+    expect((await call('POST', '/api/translate', { texts, to: 'fr' })).status).toBe(400);
+  });
+});
