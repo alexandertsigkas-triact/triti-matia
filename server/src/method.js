@@ -7,7 +7,7 @@
 export const KINDS = ['auto', 'space', 'work', 'vsm', 'art'];
 
 export const KIND_HINT = {
-  auto: 'Decide yourself what kind of scene this is.',
+  auto: 'Decide yourself what kind of scene this is (building or space, work or process, value stream map, artwork, or other) and report it in "detected".',
   space: 'Read it as a building, street, square or interior: who uses it, what rules and forces shape it.',
   work: 'Read it as a workplace or process: flows of material, people, information, time, safety, quality.',
   art: 'Read it as an artwork or image: the orders, materials, gazes and meanings that meet in it.',
@@ -32,12 +32,12 @@ Method, in short:
 ${KIND_HINT[kind]}
 ${note ? 'The person adds this context: """' + note.slice(0, 600) + '"""' : 'The person gave no extra context.'}
 Write every text field in ${language}. Use plain words for a member of the public: no method jargon (do not write "context", "contexture", "liminal", "transjunction", "P·L·T" in the fields). Be specific to what is visible. Short sentences.
-${kind === 'vsm' ? VSM_SHAPE : ''}Return ONLY JSON with exactly this shape:
+${kind === 'vsm' ? VSM_SHAPE : ''}${kind === 'auto' ? 'IF AND ONLY IF the photo shows a value stream map (lean VSM): ' + KIND_HINT.vsm + '\n' + VSM_SHAPE : ''}Return ONLY JSON with exactly this shape:
 {"subject": string (max 8 words), "summary": string (2-3 sentences),
  "logics": [{"name": string (e.g. "The driver's logic"), "wants": string, "evidence": string (what in the photo shows it)}],
  "thresholds": [{"title": string, "between": [logic index, logic index] (0-based), "happens": string, "x": number, "y": number}],
  "moves": [{"title": string, "how": string, "connects": [logic index, logic index], "threshold": number (1-based threshold number), "test": string}],
- "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}}`;
+ "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}${kind === 'auto' ? ', "detected": "space" | "work" | "vsm" | "art" | "other", "vsm": object as described above, only when detected is "vsm"' : ''}}`;
 }
 
 export function cleanAnalysis(d) {
@@ -51,6 +51,7 @@ export function cleanAnalysis(d) {
     moves: arr(d.moves).slice(0, 4).map((m) => ({ title: String(m.title || ''), how: String(m.how || ''), connects: idx(m.connects), threshold: n(m.threshold, 1, thresholds.length), test: String(m.test || '') })),
     falseFix: String(d.falseFix || ''), open: arr(d.open).slice(0, 4).map(String), limits: String(d.limits || ''),
     vsm: d.vsm && typeof d.vsm === 'object' ? cleanVsm(d.vsm) : null,
+    detected: ['space', 'work', 'vsm', 'art', 'other'].includes(d.detected) ? d.detected : null,
   };
 }
 

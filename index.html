@@ -322,7 +322,7 @@ const T = {
     hLogics: 'Ποιες λογικές συναντιούνται', hThresholds: 'Πού συναντιούνται', hMoves: 'Τι θα τις έφερνε σε επαφή',
     hFalse: 'Η εύκολη λύση που κρύβει το πρόβλημα', hOpen: 'Τι μένει ανοιχτό', hLimits: 'Τι δεν φαίνεται από μία φωτογραφία',
     wants: 'Θέλει', seen: 'Φαίνεται από', between: 'ανάμεσα σε', test: 'Πώς θα φανεί ότι δουλεύει',
-    example: 'Παράδειγμα', exampleNote: 'Έτσι μοιάζει μια ανάλυση. Τραβήξτε τη δική σας φωτογραφία για να ξεκινήσετε.',
+    detected: 'Αναγνωρίστηκε ως', example: 'Παράδειγμα', exampleNote: 'Έτσι μοιάζει μια ανάλυση. Τραβήξτε τη δική σας φωτογραφία για να ξεκινήσετε.',
     noClaude: 'Η ανάλυση χρειάζεται σύνδεση στο Claude. Ανοίξτε τη σελίδα στο claude.ai, συνδεδεμένοι, για να αναλύσετε δικές σας φωτογραφίες.',
     noImages: 'Σε αυτή την προβολή δεν επιτρέπεται η αποστολή εικόνων στο Claude.',
     failed: 'Η ανάλυση δεν ολοκληρώθηκε. Δοκιμάστε ξανά σε λίγο.', busy: 'Πολλές αναλύσεις μαζί. Περιμένετε ένα λεπτό και δοκιμάστε ξανά.',
@@ -359,7 +359,7 @@ const T = {
     hLogics: 'Which logics meet here', hThresholds: 'Where they meet', hMoves: 'What would bring them into contact',
     hFalse: 'The easy fix that hides the problem', hOpen: 'What stays open', hLimits: 'What one photo cannot show',
     wants: 'Wants', seen: 'Seen in', between: 'between', test: 'How you would know it works',
-    example: 'Example', exampleNote: 'This is what an analysis looks like. Take your own photo to begin.',
+    detected: 'Recognised as', example: 'Example', exampleNote: 'This is what an analysis looks like. Take your own photo to begin.',
     noClaude: 'Analysis needs a Claude sign-in. Open this page on claude.ai while signed in to analyse your own photos.',
     noImages: 'This view does not allow sending images to Claude.',
     failed: 'The analysis did not finish. Please try again shortly.', busy: 'Too many analyses at once. Wait a minute and try again.',
@@ -396,7 +396,7 @@ const T = {
     hLogics: 'Welche Logiken sich hier begegnen', hThresholds: 'Wo sie sich begegnen', hMoves: 'Was sie in Kontakt bringen würde',
     hFalse: 'Die bequeme Lösung, die das Problem verdeckt', hOpen: 'Was offen bleibt', hLimits: 'Was ein Foto nicht zeigen kann',
     wants: 'Will', seen: 'Sichtbar an', between: 'zwischen', test: 'Woran man erkennt, dass es wirkt',
-    example: 'Beispiel', exampleNote: 'So sieht eine Analyse aus. Nehmen Sie Ihr eigenes Foto auf, um zu beginnen.',
+    detected: 'Erkannt als', example: 'Beispiel', exampleNote: 'So sieht eine Analyse aus. Nehmen Sie Ihr eigenes Foto auf, um zu beginnen.',
     noClaude: 'Für die Analyse ist eine Anmeldung bei Claude nötig. Öffnen Sie diese Seite angemeldet auf claude.ai, um eigene Fotos zu analysieren.',
     noImages: 'In dieser Ansicht dürfen keine Bilder an Claude gesendet werden.',
     failed: 'Die Analyse wurde nicht abgeschlossen. Bitte versuchen Sie es gleich noch einmal.', busy: 'Zu viele Analysen gleichzeitig. Warten Sie eine Minute und versuchen Sie es erneut.',
@@ -543,6 +543,7 @@ function render() {
   $('#result').innerHTML = `
     ${current.example ? `<p class="example">${t('example')}</p><p class="muted">${t('exampleNote')}</p>` : ''}
     <h2>${esc(d.subject)}</h2>
+    ${d.detected && d.detected !== 'other' && d.kind === 'auto' ? `<p class="muted">${t('detected')}: <strong>${esc(t('kinds')[d.detected])}</strong></p>` : ''}
     <div class="photo">${img}${pins}</div>
     <p>${esc(d.summary)}</p>
     ${d.vsm ? vsmSection(d.vsm) : ''}
@@ -666,7 +667,7 @@ $('#tTake').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key 
 function showError(msg) { const el = $('#error'); el.textContent = msg; el.classList.remove('hidden'); }
 
 const KIND_HINT = {
-  auto: 'Decide yourself what kind of scene this is.',
+  auto: 'Decide yourself what kind of scene this is (building or space, work or process, value stream map, artwork, or other) and report it in "detected".',
   space: 'Read it as a building, street, square or interior: who uses it, what rules and forces shape it.',
   work: 'Read it as a workplace or process: flows of material, people, information, time, safety, quality.',
   art: 'Read it as an artwork or image: the orders, materials, gazes and meanings that meet in it.',
@@ -691,12 +692,12 @@ Method, in short:
 ${KIND_HINT[kind]}
 ${note ? 'The person adds this context: """' + note.slice(0, 600) + '"""' : 'The person gave no extra context.'}
 Write every text field in ${language}. Use plain words for a member of the public: no method jargon (do not write "context", "contexture", "liminal", "transjunction", "P·L·T" in the fields). Be specific to what is visible. Short sentences.
-${kind === 'vsm' ? VSM_SHAPE : ''}Return ONLY JSON with exactly this shape:
+${kind === 'vsm' ? VSM_SHAPE : ''}${kind === 'auto' ? 'IF AND ONLY IF the photo shows a value stream map (lean VSM): ' + KIND_HINT.vsm + '\n' + VSM_SHAPE : ''}Return ONLY JSON with exactly this shape:
 {"subject": string (max 8 words), "summary": string (2-3 sentences),
  "logics": [{"name": string (e.g. "The driver's logic"), "wants": string, "evidence": string (what in the photo shows it)}],
  "thresholds": [{"title": string, "between": [logic index, logic index] (0-based), "happens": string, "x": number, "y": number}],
  "moves": [{"title": string, "how": string, "connects": [logic index, logic index], "threshold": number (1-based threshold number), "test": string}],
- "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}}`;
+ "falseFix": string, "open": [string, string], "limits": string (what one photo cannot show)${kind === 'vsm' ? ', "vsm": object as described above' : ''}${kind === 'auto' ? ', "detected": "space" | "work" | "vsm" | "art" | "other", "vsm": object as described above, only when detected is "vsm"' : ''}}`;
 }
 
 function clean(d) {
@@ -710,6 +711,7 @@ function clean(d) {
     moves: arr(d.moves).slice(0, 4).map((m) => ({ title: String(m.title || ''), how: String(m.how || ''), connects: idx(m.connects), threshold: n(m.threshold, 1, thresholds.length), test: String(m.test || '') })),
     falseFix: String(d.falseFix || ''), open: arr(d.open).slice(0, 4).map(String), limits: String(d.limits || ''),
     vsm: d.vsm && typeof d.vsm === 'object' ? cleanVsm(d.vsm) : null,
+    detected: ['space', 'work', 'vsm', 'art', 'other'].includes(d.detected) ? d.detected : null,
   };
 }
 

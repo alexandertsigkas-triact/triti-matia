@@ -189,12 +189,16 @@ describe('the method', () => {
   it('asks for the VSM table only in VSM mode and keeps the note short', () => {
     expect(buildPrompt({ kind: 'vsm', lang: 'el', note: '' })).toContain('"vsm"');
     expect(buildPrompt({ kind: 'space', lang: 'en', note: '' })).not.toContain('"vsm":');
-    expect(buildPrompt({ kind: 'auto', lang: 'en', note: 'x'.repeat(2000) }).length).toBeLessThan(4000);
+    expect(buildPrompt({ kind: 'space', lang: 'en', note: 'x'.repeat(2000) })).not.toContain('x'.repeat(601));
+    expect(buildPrompt({ kind: 'auto', lang: 'de', note: '' })).toContain('IF AND ONLY IF the photo shows a value stream map');
+    expect(buildPrompt({ kind: 'auto', lang: 'de', note: '' })).toContain('German');
   });
 
   it('reads JSON from an answer with code fences and drops bad indexes', () => {
-    const d = cleanAnalysis(extractJson('Here:\n```json\n{"subject":"S","logics":[{"name":"A"}],"thresholds":[{"title":"T","between":[0,5],"x":140}]}\n```'));
+    const d = cleanAnalysis(extractJson('Here:\n```json\n{"subject":"S","detected":"vsm","logics":[{"name":"A"}],"thresholds":[{"title":"T","between":[0,5],"x":140}]}\n```'));
     expect(d.thresholds[0]).toMatchObject({ between: [0], x: 100 });
+    expect(d.detected).toBe('vsm');
+    expect(cleanAnalysis({ detected: 'nonsense' }).detected).toBeNull();
   });
 });
 
