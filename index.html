@@ -779,7 +779,13 @@ async function prepare(file) {
 
 // ───────── files: text, Word, Excel, CSV and PDF are read here on the device ─────────
 const MAX_FILE = 15 * 1024 * 1024, MAX_CHARS = 60000, MAX_PDF_PAGES = 40, SCAN_PAGES = 3;
-const vendor = (f) => new URL('./vendor/' + f, document.baseURI).href;
+const CDN = {
+  'pdf.min.js': 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.min.mjs',
+  'pdf.worker.min.js': 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.worker.min.mjs',
+  'fflate.min.js': 'https://cdn.jsdelivr.net/npm/fflate@0.8.2/esm/browser.js',
+};
+// The file readers load from jsdelivr, which the claude.ai frame allows; pinned versions.
+const vendor = (f) => CDN[f];
 function xmlText(x) {
   return x.replace(/<[^>]+>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
     .replace(/&#(\d+);/g, (m, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (m, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&amp;/g, '&');
