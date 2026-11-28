@@ -50,11 +50,36 @@ e("CCR-SYS-0005","SYS","Swiss nuclear new-build referendum","2026-09","Provision
 e("CCR-DIP-0001","DIP","US–Iran Memorandum of Understanding — trap configuration","2026-06","Provisional","public","A draft diplomatic instrument read as a liminal trap: pervasive deferral, status-quo freeze, reversibility asymmetry.")
 e("CCR-DIP-0002","DIP","US–Iran Memorandum of Understanding — seam configuration","2026-06","Provisional","public","The same instrument read as a seam: proportionality, an executive mechanism and UN Security Council reincorporation.")
 
+# Registered 28 Nov 2026 (decided by Alexander Tsigkas). Summary-only entries; full details to be added.
+# CCR-URB-0010 (ANAKTORA), CCR-ADM-0007 (ANAKTORA team reading) and CCR-ADM-0008 (individual portfolio) are private: not in this file.
+e("CCR-URB-0011","URB","Archontiko Athina and the tobacco warehouses of Xanthi","","Final","public","Core case study: the Archontiko Athina and the tobacco warehouses of Xanthi.")
+e("CCR-URB-0012","URB","The kyfi of Halki","","Final","public","Core case study: the kyfi of Halki.")
+e("CCR-URB-0013","URB","Salon interior — refusal case","","Provisional","public","An interior where the analysis ended in refusal.",gate={"od":"~2"},note="Refusal case.")
+e("CCR-SYS-0006","SYS","IBM Maximo 9.1","2026-11","Provisional","public","The IBM Maximo 9.1 asset-management platform; basis of the capstone 'Repair or Replace?'.")
+e("CCR-SYS-0007","SYS","ZERO AI-infrastructure governance","2026-11","Provisional","public","The ZERO governance framework for AI infrastructure (with Maria Kollia), read with P·L·T.")
+e("CCR-SYS-0008","SYS","Multi-agent AI debate system","","Provisional","public","A multi-agent AI debate system, read with P·L·T.")
+e("CCR-SYS-0009","SYS","Gioia methodology","","Provisional","public","The Gioia qualitative research methodology, read with P·L·T.",kind="Analysis of a method")
+e("CCR-ADM-0001","ADM","Order-to-promise — first entry","2026-06","Provisional","public","Order-to-promise process from the Makigami simulator; the commitment desk as third lane.",confirm=True,note="Restored 28 Nov 2026 from the June chat summary; titles to confirm.")
+e("CCR-ADM-0002","ADM","Order-to-promise — second entry","2026-06","Provisional","public","Order-to-promise process from the Makigami simulator; the commitment desk as third lane.",confirm=True,note="Restored 28 Nov 2026 from the June chat summary; titles to confirm.")
+e("CCR-ADM-0003","ADM","Intake-to-triage — first entry","2026-06","Provisional","public","Intake-to-triage process from the Makigami simulator; the triage cell as third.",confirm=True,note="Restored 28 Nov 2026 from the June chat summary; titles to confirm.")
+e("CCR-ADM-0004","ADM","Intake-to-triage — second entry","2026-06","Provisional","public","Intake-to-triage process from the Makigami simulator; the triage cell as third.",confirm=True,note="Restored 28 Nov 2026 from the June chat summary; titles to confirm.")
+e("CCR-ADM-0005","ADM","Permit-to-approve — first entry","2026-06","Provisional","public","Permit-to-approve process from the Makigami simulator; the pre-check as third.",confirm=True,note="Restored 28 Nov 2026 from the June chat summary; titles to confirm.")
+e("CCR-ADM-0006","ADM","Permit-to-approve — second entry","2026-06","Provisional","public","Permit-to-approve process from the Makigami simulator; the pre-check as third.",confirm=True,note="Restored 28 Nov 2026 from the June chat summary; titles to confirm.")
+e("CCR-ADM-0009","ADM","Nova Insurance — teaching model case","2026-11","Provisional","public","Model case for the course 'AI, Complexity and Leading in Transition'.",kind="Teaching case")
+e("CCR-ADM-0010","ADM","Business methodology pilot (client, anonymised)","2026-09","Provisional","anonymise","A business methodology pilot on a process platform, read with P·L·T.")
+e("CCR-LAW-0001","LAW","Pinochet No 2","","Provisional","public","The House of Lords setting aside its own judgment for apparent bias (1999), read with P·L·T.")
+e("CCR-LAW-0002","LAW","BVerfG PSPP judgment","","Provisional","public","The German Federal Constitutional Court's 2020 PSPP judgment on ECB bond purchases, read with P·L·T.")
+e("CCR-LAW-0003","LAW","Morandi bridge verdict, Genoa","","Provisional","public","The verdict on the collapse of the Morandi bridge in Genoa, read with P·L·T.")
+e("CCR-LAW-0004","LAW","CJEU Pelham — Kraftwerk sampling","","Provisional","public","The CJEU Pelham judgment on sampling Kraftwerk's 'Metall auf Metall', read with P·L·T.")
+e("CCR-HIS-0001","HIS","Messinia","2026-11","Provisional","public","First case in retrospective (historical) mode.",kind="Retrospective case")
+e("CCR-ENV-0001","ENV","Emscher river","2026-11","Provisional","public","The Emscher river as a nature-based solution, read with P·L·T; co-authored paper in preparation.")
+
 DOM = {"URB":U("Architecture & urban","Architektur & Stadt","Αρχιτεκτονική & πόλη"),"MFG":U("Manufacturing","Fertigung","Παραγωγή"),
        "SEC":U("Security","Sicherheit","Ασφάλεια"),"CCU":U("Climate technology","Klimatechnik","Κλιματική τεχνολογία"),
        "SYS":U("AI & systems","KI & Systeme","ΤΝ & συστήματα"),"NRG":U("Energy","Energie","Ενέργεια"),
-       "DIP":U("Diplomacy","Diplomatie","Διπλωματία"),"ADM":U("Administration","Verwaltung","Διοίκηση")}
-meta = {"name":"CCR Library","publisher":"Triact","framework":"P·L·T (Polycontexturality · Liminality · Transjunction), created by Alexander Tsigkas","updated":"2026-11-24","domains":DOM}
+       "DIP":U("Diplomacy","Diplomatie","Διπλωματία"),"ADM":U("Administration","Verwaltung","Διοίκηση"),
+       "LAW":U("Law","Recht","Δίκαιο"),"HIS":U("History","Geschichte","Ιστορία"),"ENV":U("Environment","Umwelt","Περιβάλλον")}
+meta = {"name":"CCR Library","publisher":"Triact","framework":"P·L·T (Polycontexturality · Liminality · Transjunction), created by Alexander Tsigkas","updated":"2026-11-28","domains":DOM}
 
 here = os.path.dirname(os.path.abspath(__file__))
 # Private entries (e.g. competition dossiers) live in private.json, which is never committed.
