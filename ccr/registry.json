@@ -718,118 +718,220 @@
    "id": "CCR-ADM-0001",
    "aliases": [],
    "domain": "ADM",
-   "title": "Order-to-promise — first entry",
+   "title": "Promise vs. capacity — Order-to-promise",
    "date": "2026-06",
    "status": "Provisional",
    "visibility": "public",
    "kind": "Case",
    "signature": null,
    "verdict": null,
-   "gate": null,
-   "summary": "Order-to-promise process from the Makigami simulator; the commitment desk as third lane.",
-   "note": "Restored 28 Nov 2026 from the June chat summary; titles to confirm.",
-   "numberToConfirm": true,
-   "contextures": [],
+   "gate": {
+    "od": 4
+   },
+   "summary": "Order-to-promise (Makigami simulator): promise and speed (sales) vs load and capacity (planning). Third: a commitment desk holding available-to-promise: every quote is checked against booked capacity before it becomes a promise.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ promise and speed (sales)",
+    "K₂ load and capacity (planning)"
+   ],
    "tool": null,
-   "source": "summary only"
+   "source": "full entry"
   },
   {
    "id": "CCR-ADM-0002",
    "aliases": [],
    "domain": "ADM",
-   "title": "Order-to-promise — second entry",
+   "title": "Spec freeze vs. late change — Order-to-promise",
    "date": "2026-06",
    "status": "Provisional",
    "visibility": "public",
    "kind": "Case",
    "signature": null,
    "verdict": null,
-   "gate": null,
-   "summary": "Order-to-promise process from the Makigami simulator; the commitment desk as third lane.",
-   "note": "Restored 28 Nov 2026 from the June chat summary; titles to confirm.",
-   "numberToConfirm": true,
-   "contextures": [],
+   "gate": {
+    "od": 3
+   },
+   "summary": "Order-to-promise (Makigami simulator): lock the order vs accommodate the customer. Third: a change desk: late changes are costed and re-promised, never silently absorbed onto the floor.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ lock the order",
+    "K₂ accommodate the customer"
+   ],
    "tool": null,
-   "source": "summary only"
+   "source": "full entry"
   },
   {
    "id": "CCR-ADM-0003",
    "aliases": [],
    "domain": "ADM",
-   "title": "Intake-to-triage — first entry",
+   "title": "Replan vs. commit — Order-to-promise",
    "date": "2026-06",
    "status": "Provisional",
    "visibility": "public",
    "kind": "Case",
    "signature": null,
    "verdict": null,
-   "gate": null,
-   "summary": "Intake-to-triage process from the Makigami simulator; the triage cell as third.",
-   "note": "Restored 28 Nov 2026 from the June chat summary; titles to confirm.",
-   "numberToConfirm": true,
-   "contextures": [],
+   "gate": {
+    "od": 3
+   },
+   "summary": "Order-to-promise (Makigami simulator): re-optimise the schedule vs honour the date given. Third: a frozen zone: inside the fence the promised date is immovable, outside it the plan re-optimises freely.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ re-optimise the schedule",
+    "K₂ honour the date given"
+   ],
    "tool": null,
-   "source": "summary only"
+   "source": "full entry"
   },
   {
    "id": "CCR-ADM-0004",
    "aliases": [],
    "domain": "ADM",
-   "title": "Intake-to-triage — second entry",
+   "title": "Speed vs. due process — Intake-to-triage",
    "date": "2026-06",
    "status": "Provisional",
    "visibility": "public",
    "kind": "Case",
    "signature": null,
    "verdict": null,
-   "gate": null,
-   "summary": "Intake-to-triage process from the Makigami simulator; the triage cell as third.",
-   "note": "Restored 28 Nov 2026 from the June chat summary; titles to confirm.",
-   "numberToConfirm": true,
-   "contextures": [],
+   "gate": {
+    "od": 4
+   },
+   "summary": "Intake-to-triage (Makigami simulator): clear the queue fast vs don't miss the serious case. Third: an escalation cell: low-risk is auto-routed, a risk signal lifts the case out of the fast lane into reviewed handling.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ clear the queue fast",
+    "K₂ don't miss the serious case"
+   ],
    "tool": null,
-   "source": "summary only"
+   "source": "full entry"
   },
   {
    "id": "CCR-ADM-0005",
    "aliases": [],
    "domain": "ADM",
-   "title": "Permit-to-approve — first entry",
+   "title": "Generalist vs. specialist — Intake-to-triage",
    "date": "2026-06",
    "status": "Provisional",
    "visibility": "public",
    "kind": "Case",
    "signature": null,
    "verdict": null,
-   "gate": null,
-   "summary": "Permit-to-approve process from the Makigami simulator; the pre-check as third.",
-   "note": "Restored 28 Nov 2026 from the June chat summary; titles to confirm.",
-   "numberToConfirm": true,
-   "contextures": [],
+   "gate": {
+    "od": 3
+   },
+   "summary": "Intake-to-triage (Makigami simulator): whoever is free takes it vs right skill for the case. Third: a skills-matched triage: routing weighted by case complexity, not just availability.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ whoever is free takes it",
+    "K₂ right skill for the case"
+   ],
    "tool": null,
-   "source": "summary only"
+   "source": "full entry"
   },
   {
    "id": "CCR-ADM-0006",
    "aliases": [],
    "domain": "ADM",
-   "title": "Permit-to-approve — second entry",
+   "title": "Close vs. document — Intake-to-triage",
    "date": "2026-06",
    "status": "Provisional",
    "visibility": "public",
    "kind": "Case",
    "signature": null,
    "verdict": null,
-   "gate": null,
-   "summary": "Permit-to-approve process from the Makigami simulator; the pre-check as third.",
-   "note": "Restored 28 Nov 2026 from the June chat summary; titles to confirm.",
-   "numberToConfirm": true,
-   "contextures": [],
+   "gate": {
+    "od": 3
+   },
+   "summary": "Intake-to-triage (Makigami simulator): close the case, free the slot vs complete the record for audit. Third: a closure gate: the case cannot close until the audit-minimum record is present.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ close the case, free the slot",
+    "K₂ complete the record for audit"
+   ],
    "tool": null,
-   "source": "summary only"
+   "source": "full entry"
+  },
+  {
+   "id": "CCR-ADM-0007",
+   "aliases": [],
+   "domain": "ADM",
+   "title": "Discretion vs. standardisation — Permit-to-approve",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": {
+    "od": 4
+   },
+   "summary": "Permit-to-approve (Makigami simulator): local judgement on the file vs uniform rule across files. Third: a pre-check: a standard checklist clears routine files; only genuinely novel files reach discretionary review.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ local judgement on the file",
+    "K₂ uniform rule across files"
+   ],
+   "tool": null,
+   "source": "full entry"
+  },
+  {
+   "id": "CCR-ADM-0008",
+   "aliases": [],
+   "domain": "ADM",
+   "title": "Conditions vs. approval — Permit-to-approve",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": {
+    "od": 3
+   },
+   "summary": "Permit-to-approve (Makigami simulator): approve to keep the queue moving vs hold until conditions are met. Third: conditional approval as a third state: issued but fenced, valid once dated conditions are signed off.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ approve to keep the queue moving",
+    "K₂ hold until conditions are met"
+   ],
+   "tool": null,
+   "source": "full entry"
   },
   {
    "id": "CCR-ADM-0009",
+   "aliases": [],
+   "domain": "ADM",
+   "title": "Speed vs. documentation — Permit-to-approve",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": {
+    "od": 3
+   },
+   "summary": "Permit-to-approve (Makigami simulator): issue the permit vs complete the justification. Third: a justification template generated from the decision itself: the record is a by-product of deciding.",
+   "note": "Restored 28 Nov 2026 from the Makigami simulator of June 2026.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ issue the permit",
+    "K₂ complete the justification"
+   ],
+   "tool": null,
+   "source": "full entry"
+  },
+  {
+   "id": "CCR-ADM-0012",
    "aliases": [],
    "domain": "ADM",
    "title": "Nova Insurance — teaching model case",
@@ -848,7 +950,7 @@
    "source": "summary only"
   },
   {
-   "id": "CCR-ADM-0010",
+   "id": "CCR-ADM-0013",
    "aliases": [],
    "domain": "ADM",
    "title": "Business methodology pilot (client, anonymised)",
