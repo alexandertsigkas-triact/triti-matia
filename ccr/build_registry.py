@@ -70,6 +70,9 @@ e("CCR-ADM-0008","ADM","Conditions vs. approval — Permit-to-approve","2026-06"
 e("CCR-ADM-0009","ADM","Speed vs. documentation — Permit-to-approve","2026-06","Provisional","public","Permit-to-approve (Makigami simulator): issue the permit vs complete the justification. Third: a justification template generated from the decision itself: the record is a by-product of deciding.",contextures=["K₁ issue the permit","K₂ complete the justification"],gate={"od":3},note="Restored 28 Nov 2026 from the Makigami simulator of June 2026.")
 e("CCR-ADM-0012","ADM","Nova Insurance — teaching model case","2026-11","Provisional","public","Model case for the course 'AI, Complexity and Leading in Transition'.",kind="Teaching case")
 e("CCR-ADM-0013","ADM","Business methodology pilot (client, anonymised)","2026-09","Provisional","anonymise","A business methodology pilot on a process platform, read with P·L·T.")
+e("CCR-RSA-0001","RSA","Fix or tow — make-safe and book","2026-06","Provisional","public","Roadside assistance, future state: mobility now (fix on site, avoid tow cost) vs proper repair and safety. The binary is refused: make the vehicle safe and book a proper repair. Analogue of the SOFMAN offcut store.",contextures=["K₁ mobility now","K₂ proper repair and safety"],gate={"od":4},note="Restored 28 Nov 2026 from the June 2026 VSM work; cited in the steel-fabrication reading guide.")
+e("CCR-RSA-0002","RSA","Intake routing — self-service and duty of care","2026-06","Provisional","public","Roadside assistance intake: self-service efficiency vs duty of care. Self-service by default, escalation to a person on a risk signal.",contextures=["K₁ self-service and cost","K₂ duty of care"],gate={"od":3},note="Restored 28 Nov 2026 from the June 2026 VSM work.")
+e("CCR-RSA-0003","RSA","Fleet positioning — utilisation and reserve","2026-06","Provisional","public","Roadside assistance fleet: utilisation vs resilience reserve. A reserve that is deployed but releasable: useful now, released on the surge.",contextures=["K₁ utilisation","K₂ resilience reserve"],gate={"od":3},note="Restored 28 Nov 2026 from the June 2026 VSM work.")
 e("CCR-LAW-0001","LAW","Pinochet No 2","","Provisional","public","The House of Lords setting aside its own judgment for apparent bias (1999), read with P·L·T.")
 e("CCR-LAW-0002","LAW","BVerfG PSPP judgment","","Provisional","public","The German Federal Constitutional Court's 2020 PSPP judgment on ECB bond purchases, read with P·L·T.")
 e("CCR-LAW-0003","LAW","Morandi bridge verdict, Genoa","","Provisional","public","The verdict on the collapse of the Morandi bridge in Genoa, read with P·L·T.")
@@ -81,7 +84,8 @@ DOM = {"URB":U("Architecture & urban","Architektur & Stadt","Αρχιτεκτο�
        "SEC":U("Security","Sicherheit","Ασφάλεια"),"CCU":U("Climate technology","Klimatechnik","Κλιματική τεχνολογία"),
        "SYS":U("AI & systems","KI & Systeme","ΤΝ & συστήματα"),"NRG":U("Energy","Energie","Ενέργεια"),
        "DIP":U("Diplomacy","Diplomatie","Διπλωματία"),"ADM":U("Administration","Verwaltung","Διοίκηση"),
-       "LAW":U("Law","Recht","Δίκαιο"),"HIS":U("History","Geschichte","Ιστορία"),"ENV":U("Environment","Umwelt","Περιβάλλον")}
+       "LAW":U("Law","Recht","Δίκαιο"),"HIS":U("History","Geschichte","Ιστορία"),"ENV":U("Environment","Umwelt","Περιβάλλον"),
+       "RSA":U("Roadside assistance","Pannenhilfe","Οδική βοήθεια")}
 meta = {"name":"CCR Library","publisher":"Triact","framework":"P·L·T (Polycontexturality · Liminality · Transjunction), created by Alexander Tsigkas","updated":"2026-11-28","domains":DOM}
 
 here = os.path.dirname(os.path.abspath(__file__))

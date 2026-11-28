@@ -58,6 +58,11 @@
    "en": "Environment",
    "de": "Umwelt",
    "el": "Περιβάλλον"
+  },
+  "RSA": {
+   "en": "Roadside assistance",
+   "de": "Pannenhilfe",
+   "el": "Οδική βοήθεια"
   }
  },
  "entries": [
@@ -967,6 +972,78 @@
    "contextures": [],
    "tool": null,
    "source": "summary only"
+  },
+  {
+   "id": "CCR-RSA-0001",
+   "aliases": [],
+   "domain": "RSA",
+   "title": "Fix or tow — make-safe and book",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": {
+    "od": 4
+   },
+   "summary": "Roadside assistance, future state: mobility now (fix on site, avoid tow cost) vs proper repair and safety. The binary is refused: make the vehicle safe and book a proper repair. Analogue of the SOFMAN offcut store.",
+   "note": "Restored 28 Nov 2026 from the June 2026 VSM work; cited in the steel-fabrication reading guide.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ mobility now",
+    "K₂ proper repair and safety"
+   ],
+   "tool": null,
+   "source": "full entry"
+  },
+  {
+   "id": "CCR-RSA-0002",
+   "aliases": [],
+   "domain": "RSA",
+   "title": "Intake routing — self-service and duty of care",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": {
+    "od": 3
+   },
+   "summary": "Roadside assistance intake: self-service efficiency vs duty of care. Self-service by default, escalation to a person on a risk signal.",
+   "note": "Restored 28 Nov 2026 from the June 2026 VSM work.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ self-service and cost",
+    "K₂ duty of care"
+   ],
+   "tool": null,
+   "source": "full entry"
+  },
+  {
+   "id": "CCR-RSA-0003",
+   "aliases": [],
+   "domain": "RSA",
+   "title": "Fleet positioning — utilisation and reserve",
+   "date": "2026-06",
+   "status": "Provisional",
+   "visibility": "public",
+   "kind": "Case",
+   "signature": null,
+   "verdict": null,
+   "gate": {
+    "od": 3
+   },
+   "summary": "Roadside assistance fleet: utilisation vs resilience reserve. A reserve that is deployed but releasable: useful now, released on the surge.",
+   "note": "Restored 28 Nov 2026 from the June 2026 VSM work.",
+   "numberToConfirm": false,
+   "contextures": [
+    "K₁ utilisation",
+    "K₂ resilience reserve"
+   ],
+   "tool": null,
+   "source": "full entry"
   },
   {
    "id": "CCR-LAW-0001",
